@@ -1,12 +1,7 @@
+
 .bg-image{
     background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwQmvZ51fwJLJaS0P8ZRTITiTBCjlbTrlAqA&usqp=CAU');
         height: 400px;
-}
-form{
-    width: 500px;
-    margin: auto;
-    background-color: #333a56;
-    
 }
 
 form .form-outline .form-control{
@@ -18,3 +13,6 @@ form .form-outline .form-control{
     height: 300px;
     /* object-fit: cover; */
   }
+  .card-body{
+    height: 175px;
+}
