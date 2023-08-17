@@ -33,6 +33,7 @@
             <h5 class="card-title">${product.name}</h5>
             <p class="card-text">${product.description}</p>
             <a href="productDetails.html" class="btn btn-primary">Learn More</a>
+            <a href="shopping-cart.html" class="btn btn-primary">Add to Cart</a>
             </div>
         </div>
       `;
