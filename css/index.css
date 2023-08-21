@@ -16,3 +16,7 @@ form .form-outline .form-control{
   .card-body{
     height: 175px;
 }
+.cart-container #selected-product{
+    display: flex;
+    flex-wrap: wrap;
+}
