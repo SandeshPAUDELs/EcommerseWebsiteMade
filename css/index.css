@@ -16,7 +16,15 @@ form .form-outline .form-control{
   .card-body{
     height: 175px;
 }
-.cart-container #selected-product{
+
+.cart-container #selected-product .cart-item{
     display: flex;
-    flex-wrap: wrap;
+}
+.cart-container #selected-product .cart-item .left{
+    width: 300px;
+    margin: auto;
+}
+.row .col-lg-4 .w-100 .flex-column .card-footer .add-to-cart-button{
+    width: 50px;
+    margin-left: 5px;
 }
