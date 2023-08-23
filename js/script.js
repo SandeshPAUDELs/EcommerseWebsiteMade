@@ -88,8 +88,3 @@
   }
   
   window.addEventListener("load", generateCards);
-
-
-
-
-  
