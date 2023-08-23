@@ -49,7 +49,7 @@
   
   function generateCards() {
     const cardContainer = document.getElementById("card-container");
-  
+
     products.forEach(product => {
       const card = document.createElement("div");
       card.className = "col-md-4 mb-4";
@@ -64,9 +64,10 @@
           </div>
         </div>
       `;
+      // cardContainer.appendChild(card);
       cardContainer.appendChild(card);
     });
-  
+
     const addToCartButtons = document.querySelectorAll('.add-to-cart');
     addToCartButtons.forEach(button => {
       button.addEventListener('click', addToCart);

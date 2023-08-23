@@ -1,4 +1,5 @@
-document.addEventListener('DOMContentLoaded', function () {
+
+  document.addEventListener('DOMContentLoaded', function () {
     const selectedProductDiv = document.getElementById('selected-product');
     let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
   
@@ -23,15 +24,22 @@ document.addEventListener('DOMContentLoaded', function () {
     const addToCartButtons = document.querySelectorAll('.add-to-cart-button');
     addToCartButtons.forEach(button => {
       button.addEventListener('click', function () {
-        const productDiv = this.closest('.card');
-        const productName = productDiv.querySelector('.card-title').textContent;
+        const productDiv = this.closest('.row');
+        const productName = productDiv.querySelector('.card-text').textContent;
         const productImage = productDiv.querySelector('.card-img-top').getAttribute('src');
-        const productPrice = productDiv.querySelector('.card-text').textContent;
-        
+        const productPrice = productDiv.querySelector('.card-title').textContent;
         updateCart(productName, productImage, productPrice);
       });
     });
   });
+  
+
+
+  
+
+
+   
+
 
    
 
