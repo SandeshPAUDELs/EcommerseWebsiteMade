@@ -28,7 +28,24 @@ form .form-outline .form-control{
     width: 50px;
     margin-left: 5px;
 }
-.product-no-input{
-    width: 100px;
+.cart-item{
+    border: 1px solid rgb(232, 238, 232);
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+.multiply-button, .checkout-link{
     margin: auto;
+    width: 150px;
+    
+}
+.remove-button{
+    margin: auto;
+    width: 100px;
+    color: rgb(224, 110, 110);
+}
+.text-center label{
+    display: block;
+    font-size: 20px;
+    
 }

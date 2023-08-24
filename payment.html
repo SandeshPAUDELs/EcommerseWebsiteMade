@@ -129,8 +129,8 @@ rel="stylesheet"
     </div>
     <!-- Container wrapper -->
   </nav>
-
-  <div class="row mb-4">
+<div class="container">
+  <div style = "margin-top: 15px;" class="row mb-4">
     <div class="col">
       <div class="form-outline">
         <input type="text" id="form6Example1" class="form-control" />
@@ -156,13 +156,15 @@ rel="stylesheet"
     <input type="number" id="form6Example4" class="form-control" />
     <label class="form-label" for="form6Example4">Account Number</label>
   </div>
-  <div class="form-outline mb-4">
-    <label class="form-label" for="form6Example4">Payment Gateway</label>
+  <div class="form-outline mb-4 text-center">
+    <label class="form-label text-muted" for="form6Example4">Select Your Payment Gateway</label>
     <input type="radio" name = "payment Gateway" value = "E-Sewa">
-    <label for="E-sewa">E-sewa</label>
+    <label class="form-label" for="E-sewa">E-sewa</label>
     <input type="radio" name = "payment Gateway" value = "Khalti">
-    <label for="E-sewa">Khalti</label>
-    
+    <label class="form-outline" for="E-sewa">Khalti</label>
+    <a href="index.html"><button type="submit" class="btn btn-primary btn-block mb-4" onclick = "submit()">Submit</button>
+    </a>
+  </div>
   </div>
 
   <!-- Footer -->

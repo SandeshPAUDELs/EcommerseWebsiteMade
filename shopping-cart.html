@@ -501,16 +501,13 @@ rel="stylesheet"
   </div>
   <!-- Copyright -->
 </footer>
-
-<script>
-
-document.addEventListener('DOMContentLoaded', function () {
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
   const selectedProductDiv = document.getElementById('selected-product');
   let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
 
-  function updateCart(productName, productImage, productPrice, isRemoveButton, selectedQuantity = 1) {
+  function updateCart(productName, productImage, productPrice, isRemoveButton) {
     const existingItemIndex = cartItems.findIndex(item => item.name === productName);
-    console.log(cartItems);
 
     if (isRemoveButton) {
       if (existingItemIndex !== -1) {
@@ -520,7 +517,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       return;
     }
-updateCart()
+
     const existingItem = cartItems.find(item => item.name === productName);
     if (existingItem) {
       alert("Item is already in the cart.");
@@ -545,44 +542,63 @@ updateCart()
       const productDiv = document.createElement('div');
       productDiv.className = 'cart-item';
 
-      const quantityInput = document.createElement('input');
-      quantityInput.type = 'number';
-      quantityInput.min = 1;
-      quantityInput.className = 'form-control quantity-input';
-      quantityInput.dataset.name = product.name;
-      quantityInput.dataset.price = product.price;
-      quantityInput.value = product.quantity;
+      const productImage = document.createElement('img');
+      productImage.src = product.image;
+      productImage.alt = product.name;
+      productImage.style.width = '150px';
+      productImage.style.height = '150px';
 
-      const totalPriceDiv = document.createElement('div');
-      totalPriceDiv.className = 'total-price';
-      
-      quantityInput.addEventListener('input', (event) => {
-        const enteredQuantity = parseInt(event.target.value);
-        const productPrice = parseFloat(event.target.dataset.price);
+      const priceDisplay = document.createElement('h5');
+      priceDisplay.className = 'left cart-item-price';
+      priceDisplay.textContent = `Rs ${product.price}/-`;
 
-        updateCart(product.name, product.image, productPrice, false, enteredQuantity);
-        const totalPrice = productPrice * enteredQuantity;
-        totalPriceDiv.textContent = `Total: Rs ${totalPrice.toFixed(2)}`;
+      if (product.multiplier === undefined) {
+        product.multiplier = 1;
+      }
+
+      const multiplyButton = document.createElement('button');
+      multiplyButton.textContent = '+1(Add items)';
+      multiplyButton.className = 'multiply-button';
+      multiplyButton.dataset.productName = product.name;
+
+      multiplyButton.addEventListener('click', function () {
+        const productName = this.dataset.productName;
+
+        const priceDisplay = productDiv.querySelector('.cart-item-price');
+        if (priceDisplay) {
+          product.multiplier += 1;
+          const displayedPrice = product.price * product.multiplier;
+          priceDisplay.textContent = `Rs ${displayedPrice.toFixed(2)} /-`;
+        }
       });
 
-      productDiv.innerHTML = `
-        <img style="width: 100px; height: 100px;" src="${product.image}" alt="${product.name}" />
-        <div class="product-no-input">
-          ${quantityInput.outerHTML}
-        </div>
-        <h5 class="left cart-item-price">Rs ${product.price}</h5>
-        <p class="left cart-item-name">${product.name}</p>
-        <div>
-          <button style="height: 30px; margin-top: 5px;" class="remove-from-cart-button">Remove</button>
-          <a class="checkout-form-cart bg-secondary text-dark" href="checkout.html">
-            <button>CheckOut</button>
-          </a>
-        </div>
-      `;
-      productDiv.appendChild(totalPriceDiv); // Append the total price div
+      const removeButton = document.createElement('button');
+      removeButton.textContent = 'Remove';
+      removeButton.className = 'remove-button';
+      removeButton.dataset.productName = product.name;
+
+      removeButton.addEventListener('click', function () {
+        const productName = this.dataset.productName;
+        updateCart(productName, null, null, true);
+      });
+
+      const checkoutLink = document.createElement('a');
+      checkoutLink.href = 'checkout.html';
+      checkoutLink.className = 'checkout-link';
+
+      const checkoutButton = document.createElement('button');
+      checkoutButton.textContent = 'Check Out';
+
+      checkoutLink.appendChild(checkoutButton);
+
+      productDiv.appendChild(productImage);
+      productDiv.appendChild(multiplyButton);
+      productDiv.appendChild(priceDisplay);
+      productDiv.appendChild(removeButton);
+      productDiv.appendChild(checkoutLink);
+
       selectedProductDiv.appendChild(productDiv);
     });
-
     const removeFromCartButtons = document.querySelectorAll('.remove-from-cart-button');
     removeFromCartButtons.forEach(button => {
       button.addEventListener('click', function () {
@@ -591,111 +607,16 @@ updateCart()
         updateCart(productName, null, null, true);
       });
     });
+    if (index < cartItems.length - 1) {
+      const horizontalLine = document.createElement('hr');
+      selectedProductDiv.appendChild(horizontalLine);
+    }
+
   }
 
   renderCart();
 });
-
-
-//   document.addEventListener('DOMContentLoaded', function () {
-//   const selectedProductDiv = document.getElementById('selected-product');
-//   let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-
-//   function updateCart(productName, productImage, productPrice, isRemoveButton, selectedQuantity = 1) {
-//     const existingItemIndex = cartItems.findIndex(item => item.name === productName);
-// console.log(cartItems);
-//     if (isRemoveButton) {
-//       if (existingItemIndex !== -1) {
-//         cartItems.splice(existingItemIndex, 1);
-//         localStorage.setItem("cart", JSON.stringify(cartItems));
-//         renderCart();
-//       }
-//       return;
-//     }
-
-//     const existingItem = cartItems.find(item => item.name === productName);
-//     if (existingItem) {
-//       alert("Item is already in the cart.");
-//       return;
-//     }
-
-//     cartItems.push({
-//       name: productName,
-//       image: productImage,
-//       price: productPrice,
-//       quantity: selectedQuantity
-//     });
-
-//     localStorage.setItem("cart", JSON.stringify(cartItems));
-//     renderCart();
-//     alert("Added to cart!");
-//   }
-
-//   function renderCart() {
-//     selectedProductDiv.innerHTML = '';
-//     cartItems.forEach(product => {
-//       const productDiv = document.createElement('div');
-//       productDiv.className = 'cart-item';
-
-//       const quantityInput = document.createElement('input');
-//       quantityInput.type = 'number';
-//       quantityInput.min = 1;
-//       quantityInput.className = 'form-control quantity-input';
-//       quantityInput.dataset.name = product.name;
-//       quantityInput.dataset.price = product.price;
-//       quantityInput.value = product.quantity;
-      
-//       quantityInput.addEventListener('input', (event) => {
-//         const cardTitle = productDiv.querySelector('.card-title');
-//         const enteredQuantity = parseInt(event.target.value);
-//         const productName = event.target.dataset.name;
-//         const productPrice = parseFloat(event.target.dataset.price);
-//         // const productPrice = parseFloat(cardTitle.textContent.match(/Rs (\d+(\.\d+)?)/)[1]);
-
-//         updateCart(productName, null, null, false, enteredQuantity);
-//         const priceParagraph = productDiv.querySelector('.cart-item-price');
-//         if (priceParagraph) {
-//           // const totalPrice = productPrice * enteredQuantity;
-//           // priceParagraph.textContent = `Rs ${totalPrice.toFixed(2)}`;
-//         const totalPrice = productPrice * enteredQuantity;
-//         priceParagraph.textContent = `Rs ${totalPrice.toFixed(2)}`;
-        
-//         }
-//       });
-
-//       productDiv.innerHTML = `
-//         <img style="width: 100px; height: 100px;" src="${product.image}" alt="${product.name}" />
-//         <div class="product-no-input">
-//           ${quantityInput.outerHTML}
-//         </div>
-//         <h5 class="left cart-item-price">Rs ${product.price}</h5>
-//         <p class="left cart-item-name">${product.name}</p>
-//         <div>
-//           <button style="height: 30px; margin-top: 5px;" class="remove-from-cart-button">Remove</button>
-//           <a class="checkout-form-cart bg-secondary text-dark" href="checkout.html">
-//             <button>CheckOut</button>
-//           </a>
-//         </div>
-//       `;
-//       selectedProductDiv.appendChild(productDiv);
-//       console.log(product.name, product.image, product.price, product.quantity, product.totalPrice);
-//     });
-
-//     const removeFromCartButtons = document.querySelectorAll('.remove-from-cart-button');
-//     removeFromCartButtons.forEach(button => {
-//       button.addEventListener('click', function () {
-//         const productDiv = this.closest('.cart-item');
-//         const productName = productDiv.querySelector('.cart-item-name').textContent;
-//         updateCart(productName, null, null, true);
-//       });
-//     });
-//   }
-
-//   renderCart();
-// });
-
-</script>
-
+  </script> 
     <script src = "js/script2.js"></script>
     <script src = "js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
