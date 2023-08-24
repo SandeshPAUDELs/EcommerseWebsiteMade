@@ -30,15 +30,15 @@ form .form-outline .form-control{
 }
 .cart-item{
     border: 1px solid rgb(232, 238, 232);
-    margin-top: 20px;
+    /* margin-top: 20px; */
     border-radius: 5px;
 }
 
-.multiply-button, .checkout-link{
+.multiply-button, .multiply-button1, .checkout-link{
     margin: auto;
-    width: 150px;
-    
+
 }
+
 .remove-button{
     margin: auto;
     width: 100px;
@@ -53,4 +53,16 @@ form .form-outline .form-control{
     font-size: 10px;
     color: green;
     margin-top: 10px;
+}
+.cartContentDisplay{
+    display: flex;
+    flex-wrap: wrap;
+}
+.cartContentDisplay .cart-container{
+    width: 75%;
+}
+.cartContentDisplay .PurchasePrice{
+    width: 25%;
+    border: 1px solid rgb(232, 238, 232);
+ 
 }
