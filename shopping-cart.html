@@ -552,6 +552,8 @@ rel="stylesheet"
       priceDisplay.className = 'left cart-item-price';
       priceDisplay.textContent = `Rs ${product.price}/-`;
 
+
+
       if (product.multiplier === undefined) {
         product.multiplier = 1;
       }
@@ -568,7 +570,7 @@ rel="stylesheet"
         if (priceDisplay) {
           product.multiplier += 1;
           const displayedPrice = product.price * product.multiplier;
-          priceDisplay.textContent = `Rs ${displayedPrice.toFixed(2)} /-`;
+          priceDisplay.innerHTML = `Rs ${displayedPrice.toFixed(2)} /- <div class = "perItem">Rs ${product.price}/- /perItem</div>`;
         }
       });
 
