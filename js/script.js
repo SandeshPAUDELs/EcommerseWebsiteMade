@@ -74,18 +74,18 @@
     });
   }
   
-  function addToCart(event) {
-    event.preventDefault();
-    const productName = event.target.dataset.name;
-    const productPrice = event.target.dataset.price;
-    const productImageUrl = event.target.closest('.card').querySelector('.card-img-top').src;
-    // const productImageUrl = event.target.dataset.imageUrl;
-    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-      // cartItems.push({ name: productName, price: productPrice, ImageUrl: productImageUrl});
-      cartItems.push({ name: productName, price: productPrice, ImageUrl: productImageUrl, quantity: 1 });
+  // function addToCart(event) {
+  //   event.preventDefault();
+  //   const productName = event.target.dataset.name;
+  //   const productPrice = event.target.dataset.price;
+  //   const productImageUrl = event.target.closest('.card').querySelector('.card-img-top').src;
+  //   // const productImageUrl = event.target.dataset.imageUrl;
+  //   const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+  //     // cartItems.push({ name: productName, price: productPrice, ImageUrl: productImageUrl});
+  //     cartItems.push({ name: productName, price: productPrice, ImageUrl: productImageUrl, quantity: 1 });
 
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
-    alert('Item added to cart!');
-  }
+  //   localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  //   alert('Item added to cart!');
+  // }
   
   window.addEventListener("load", generateCards);
