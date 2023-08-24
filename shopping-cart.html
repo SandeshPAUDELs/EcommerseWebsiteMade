@@ -501,137 +501,92 @@ rel="stylesheet"
   </div>
   <!-- Copyright -->
 </footer>
-
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    // const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const selectedProductContainer = document.getElementById('selected-product');
-    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || []; // This is from JavaScript script.js which is in index.html 
-    function updateCartContent() {
-        selectedProductContainer.innerHTML = '';
-        // cartItems is given from index.html files
-    cartItems.forEach((item, index) => {
-      const productDiv = document.createElement('div');
-      productDiv.className = 'cart-item';
-      
-            let initialPrice  = parseFloat(item.price.replace(/\D+/g, '')) * item.quantity;
-            let totalPrice = initialPrice;
-      productDiv.innerHTML = `
-      <img style = "width: 100px; height: 100px;" src="${item.ImageUrl}" alt="${item.name}" class="cart-item-image">
-      <div class="left">
-                   <select style="width: 100px;" class="form-select me-4">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                    </select>
-                </div>
-       <p class = "left"><strong>Name:</strong> ${item.name}</p>
-        <p class = "left"><strong>Price:</strong>${item.price}</p>
-        <button style = "height: 30px; margin-top: 5px;" class="btn text-danger remove-button" data-index="${index}">Remove</button>
-      `;
-      selectedProductContainer.appendChild(productDiv);
-  });
-  const removeButtons = document.querySelectorAll('.remove-button');
-  removeButtons.forEach(button => {
-    button.addEventListener('click', removeFromCart);
-  });
+  document.addEventListener('DOMContentLoaded', function () {
+  const selectedProductDiv = document.getElementById('selected-product');
+  let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
 
-  function removeFromCart(event) {
-  const itemIndex = parseInt(event.target.dataset.index);
-  if (!isNaN(itemIndex) && itemIndex >= 0 && itemIndex < cartItems.length) {
-    cartItems.splice(itemIndex, 1); // Remove the item from the index
-    localStorage.setItem('cartItems', JSON.stringify(cartItems)); // Update local storage
-    updateCartContent(); // Update the displayed cart content
-  }
-}     
-    }
-    updateCartContent();
-});
+  function updateCart(productName, productImage, productPrice, isRemoveButton, selectedQuantity = 1) {
+    const existingItemIndex = cartItems.findIndex(item => item.name === productName);
 
-    </script>
-<script>
-  
-    document.addEventListener('DOMContentLoaded', function () {
-      const selectedProductDiv = document.getElementById('selected-product');
-      let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-
-      function updateCart(productName, productImage, productPrice, isRemoveButton, selectedQuantity = 1) {
-        const existingItemIndex = cartItems.findIndex(item => item.name === productName);
-
-        if (isRemoveButton) {
-          if (existingItemIndex !== -1) {
-            cartItems.splice(existingItemIndex, 1);
-            localStorage.setItem("cart", JSON.stringify(cartItems));
-            renderCart();
-          }
-          return;
-        }
-
-        const existingItem = cartItems.find(item => item.name === productName);
-
-        if (existingItem) {
-          alert("Item is already in the cart.");
-          return;
-        }
-
-        cartItems.push({
-          name: productName,
-          image: productImage,
-          price: productPrice,
-          quantity: selectedQuantity
-        });
-
+    if (isRemoveButton) {
+      if (existingItemIndex !== -1) {
+        cartItems.splice(existingItemIndex, 1);
         localStorage.setItem("cart", JSON.stringify(cartItems));
         renderCart();
-        alert("Added to cart!");
       }
+      return;
+    }
 
-      function renderCart() {
-        selectedProductDiv.innerHTML = '';
-        cartItems.forEach(product => {
-          const productDiv = document.createElement('div');
-          productDiv.className = 'cart-item';
+    const existingItem = cartItems.find(item => item.name === productName);
+    if (existingItem) {
+      alert("Item is already in the cart.");
+      return;
+    }
 
-          const quantityInput = document.createElement('input');
-          quantityInput.type = 'number';
-          quantityInput.min = 1;
-          quantityInput.className = 'form-control quantity-input';
-          quantityInput.dataset.name = product.name;
-          quantityInput.dataset.price = product.price;
-          quantityInput.value = product.quantity;
+    cartItems.push({
+      name: productName,
+      image: productImage,
+      price: productPrice,
+      quantity: selectedQuantity
+    });
 
-          // Modify the input event listener
-          quantityInput.addEventListener('input', (event) => {
-            const enteredQuantity = parseInt(event.target.value);
-            const productName = event.target.dataset.name;
-            const productPrice = parseFloat(event.target.dataset.price);
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+    renderCart();
+    alert("Added to cart!");
+  }
 
-            updateCart(productName, null, null, false, enteredQuantity);
-            const priceParagraph = productDiv.querySelector('.cart-item-price');
-            if (priceParagraph) {
-              const totalPrice = productPrice * enteredQuantity;
-              priceParagraph.textContent = `Rs ${totalPrice.toFixed(2)}`;
-            }
-          });
+  function renderCart() {
+    selectedProductDiv.innerHTML = '';
+    cartItems.forEach(product => {
+      const productDiv = document.createElement('div');
+      productDiv.className = 'cart-item';
 
-          productDiv.innerHTML = `
-            <img style="width: 100px; height: 100px;" src="${product.image}" alt="${product.name}" />
-            <div class="product-no-input">
-              ${quantityInput.outerHTML}
-            </div>
-            <p class="left cart-item-price">Rs ${product.price}</p>
-            <p class="left cart-item-name">${product.name}</p>
-            <div>
-              <button style="height: 30px; margin-top: 5px;" class="remove-from-cart-button">Remove</button>
-              <a class="checkout-form-cart bg-secondary text-dark" href="checkout.html">
-                <button>CheckOut</button>
-              </a>
-            </div>
-          `;
-          selectedProductDiv.appendChild(productDiv);
-        });
-        const removeFromCartButtons = document.querySelectorAll('.remove-from-cart-button');
+      const quantityInput = document.createElement('input');
+      quantityInput.type = 'number';
+      quantityInput.min = 1;
+      quantityInput.className = 'form-control quantity-input';
+      quantityInput.dataset.name = product.name;
+      quantityInput.dataset.price = product.price;
+      quantityInput.value = product.quantity;
+      
+      // Modify the input event listener
+      quantityInput.addEventListener('input', (event) => {
+        const cardTitle = productDiv.querySelector('.card-title');
+        const enteredQuantity = parseInt(event.target.value);
+        const productName = event.target.dataset.name;
+        // const productPrice = parseFloat(event.target.dataset.price);
+        const productPrice = parseFloat(cardTitle.textContent.match(/Rs (\d+(\.\d+)?)/)[1]);
+
+        updateCart(productName, null, null, false, enteredQuantity);
+        const priceParagraph = productDiv.querySelector('.cart-item-price');
+        if (priceParagraph) {
+          // const totalPrice = productPrice * enteredQuantity;
+          // priceParagraph.textContent = `Rs ${totalPrice.toFixed(2)}`;
+        const totalPrice = productPrice * enteredQuantity;
+        priceParagraph.textContent = `Rs ${totalPrice.toFixed(2)}`;
+
+        }
+      });
+
+      productDiv.innerHTML = `
+        <img style="width: 100px; height: 100px;" src="${product.image}" alt="${product.name}" />
+        <div class="product-no-input">
+          ${quantityInput.outerHTML}
+        </div>
+        <h5 class="left cart-item-price">Rs ${product.price * product.quantity}</h5>
+        <p class="left cart-item-name">${product.name}</p>
+        <div>
+          <button style="height: 30px; margin-top: 5px;" class="remove-from-cart-button">Remove</button>
+          <a class="checkout-form-cart bg-secondary text-dark" href="checkout.html">
+            <button>CheckOut</button>
+          </a>
+        </div>
+      `;
+      selectedProductDiv.appendChild(productDiv);
+    });
+
+    const removeFromCartButtons = document.querySelectorAll('.remove-from-cart-button');
     removeFromCartButtons.forEach(button => {
       button.addEventListener('click', function () {
         const productDiv = this.closest('.cart-item');
@@ -639,208 +594,11 @@ document.addEventListener('DOMContentLoaded', function () {
         updateCart(productName, null, null, true);
       });
     });
-      }
+  }
 
-      renderCart();
-    });
+  renderCart();
+});
 
-
-//   document.addEventListener('DOMContentLoaded', function () {
-//   const selectedProductDiv = document.getElementById('selected-product');
-//   let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-
-//   function updateCart(productName, productImage, productPrice, isRemoveButton, selectedQuantity = 1) {
-//     const existingItemIndex = cartItems.findIndex(item => item.name === productName);
-
-//     if (isRemoveButton) {
-//       if (existingItemIndex !== -1) {
-//         cartItems.splice(existingItemIndex, 1);
-//         localStorage.setItem("cart", JSON.stringify(cartItems));
-//         renderCart();
-//       }
-//       return;
-//     }
-
-//     const existingItem = cartItems.find(item => item.name === productName);
-
-//     if (existingItem) {
-//       alert("Item is already in the cart.");
-//       return;
-//     }
-
-//     cartItems.push({
-//       name: productName,
-//       image: productImage,
-//       price: productPrice,
-//       quantity: selectedQuantity
-//     });
-
-//     localStorage.setItem("cart", JSON.stringify(cartItems));
-//     renderCart();
-//     alert("Added to cart!");
-//   }
-
-//   function renderCart() {
-//     selectedProductDiv.innerHTML = '';
-//     cartItems.forEach(product => {
-//       const productDiv = document.createElement('div');
-//       productDiv.className = 'cart-item';
-      
-//       const quantityDropdown = document.createElement('select');
-//       quantityDropdown.style.width = '100px';
-//       quantityDropdown.className = 'form-select quantity-dropdown';
-//       quantityDropdown.dataset.name = product.name;
-//       quantityDropdown.dataset.price = product.price;
-//       // quantityDropdown.dataset.name = product.name;
-
-
-//       for (let i = 1; i <= 4; i++) {
-//         const option = document.createElement('option');
-//         option.value = i;
-//         option.text = i;
-//         quantityDropdown.appendChild(option);
-//       }
-      
-//       quantityDropdown.value = product.quantity;
-
-//       quantityDropdown.addEventListener('change', (event) => {
-//         const selectedQuantity = parseInt(event.target.value);
-//         const productName = event.target.dataset.name;
-//         const productPrice = parseFloat(event.target.dataset.price);
-        
-//         updateCart(productName, null, null, false, selectedQuantity);
-//         const priceParagraph = productDiv.querySelector('.cart-item-price');
-//         if (priceParagraph) {
-//           const totalPrice = productPrice * selectedQuantity;
-//           priceParagraph.textContent = `Rs ${totalPrice.toFixed(2)}`;
-//         }
-//       });
-
-//       productDiv.innerHTML = `
-//         <img style="width: 100px; height: 100px;" src="${product.image}" alt="${product.name}" />
-//         <div class="left">
-//           ${quantityDropdown.outerHTML}
-//         </div>
-//         <p class="left cart-item-price">Rs ${product.price}</p>
-//         <p class="left cart-item-name">${product.name}</p>
-
-//         <div>
-//           <button style="height: 30px; margin-top: 5px;" class="remove-from-cart-button">Remove</button>
-//           <a class = "checkout-form-cart bg-secondary text-dark" href = "checkout.html"><button>CheckOut</button></a>
-//           </div>
-//       `;
-//       selectedProductDiv.appendChild(productDiv);
-//     });
-
-//     const removeFromCartButtons = document.querySelectorAll('.remove-from-cart-button');
-//     removeFromCartButtons.forEach(button => {
-//       button.addEventListener('click', function () {
-//         const productDiv = this.closest('.cart-item');
-//         const productName = productDiv.querySelector('.cart-item-name').textContent;
-//         updateCart(productName, null, null, true);
-//       });
-//     });
-//   }
-
-//   renderCart();
-
-//   const addToCartButtons = document.querySelectorAll('.add-to-cart-button');
-//   addToCartButtons.forEach(button => {
-//     button.addEventListener('click', function () {
-//       const productDiv = this.closest('.card');
-//       const productName = productDiv.querySelector('.card-title').textContent;
-//       const productImage = productDiv.querySelector('.card-img-top').getAttribute('src');
-//       const productPrice = parseFloat(productDiv.querySelector('.card-text').textContent.replace(/\D+/g, ''));
-      
-//       updateCart(productName, productImage, productPrice, false);
-//     });
-//   });
-// });
-
-
-// document.addEventListener('DOMContentLoaded', function () {
-//   const selectedProductDiv = document.getElementById('selected-product');
-//   let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-
-//   function updateCart() {
-//     selectedProductDiv.innerHTML = '';
-
-//     cartItems.forEach(product => {
-//       const productDiv = document.createElement('div');
-//       productDiv.className = 'cart-item';
-
-//       const quantityDropdown = document.createElement('select');
-//       quantityDropdown.style.width = '100px';
-//       quantityDropdown.className = 'form-select quantity-dropdown';
-
-//       for (let i = 1; i <= 4; i++) {
-//         const option = document.createElement('option');
-//         option.value = i;
-//         option.text = i;
-//         quantityDropdown.appendChild(option);
-//       }
-
-//       quantityDropdown.addEventListener('change', (event) => {
-//         const selectedQuantity = parseInt(event.target.value);
-//         product.quantity = selectedQuantity;
-//         updateCart();
-//       });
-
-//       const totalPrice = product.price * product.quantity;
-
-//       productDiv.innerHTML = `
-//         <img style="width: 100px; height: 100px;" src="${product.image}" alt="${product.name}" />
-//         <div class="left">
-//           ${quantityDropdown.outerHTML}
-//         </div>
-//         <p class="left cart-item-name">${product.name}</p>
-//         <p class="left cart-item-price">Rs ${totalPrice.toFixed(2)}</p>
-//         <button style="height: 30px; margin-top: 5px;" class="remove-from-cart-button">Remove</button>
-//         <a class = "checkout-form-cart bg-secondary text-dark" href = "checkout.html"><button>CheckOut</button></a>
-
-//       `;
-
-//       selectedProductDiv.appendChild(productDiv);
-//     });
-
-//     const removeFromCartButtons = document.querySelectorAll('.remove-from-cart-button');
-//     removeFromCartButtons.forEach(button => {
-//       button.addEventListener('click', function () {
-//         const productName = this.parentElement.querySelector('.cart-item-name').textContent;
-//         cartItems = cartItems.filter(item => item.name !== productName);
-//         localStorage.setItem('cart', JSON.stringify(cartItems));
-//         updateCart();
-//       });
-//     });
-//   }
-
-//   const addToCartButtons = document.querySelectorAll('.add-to-cart-button');
-//   addToCartButtons.forEach(button => {
-//     button.addEventListener('click', function () {
-//       const productDiv = this.closest('.card');
-//       const productName = productDiv.querySelector('.card-title').textContent;
-//       const productImage = productDiv.querySelector('.card-img-top').getAttribute('src');
-//       const productPrice = parseFloat(productDiv.querySelector('.card-text').textContent.replace(/\D+/g, ''));
-
-//       const existingItem = cartItems.find(item => item.name === productName);
-//       if (existingItem) {
-//         existingItem.quantity++;
-//       } else {
-//         cartItems.push({
-//           name: productName,
-//           image: productImage,
-//           price: productPrice,
-//           quantity: 1
-//         });
-//       }
-
-//       localStorage.setItem('cart', JSON.stringify(cartItems));
-//       updateCart();
-//     });
-//   });
-
-//   updateCart();
-// });
 </script>
 
     <script src = "js/script2.js"></script>

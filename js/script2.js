@@ -24,9 +24,9 @@ document.addEventListener('DOMContentLoaded', function () {
   addToCartButtons.forEach(button => {
     button.addEventListener('click', function () {
       const productDiv = this.closest('.card');
-      const productName = productDiv.querySelector('.card-title').textContent;
+      const productName = productDiv.querySelector('.card-text').textContent;
       const productImage = productDiv.querySelector('.card-img-top').getAttribute('src');
-      const productPrice = productDiv.querySelector('.card-text').textContent;
+      const productPrice = productDiv.querySelector('.card-title').textContent;
       
       updateCart(productName, productImage, productPrice);
     });
