@@ -33,4 +33,4 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-
+// Add to cart in Shopping cart.html

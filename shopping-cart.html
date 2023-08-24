@@ -139,10 +139,10 @@ rel="stylesheet"
       <div class="PurchasePrice">
         <div class="card shadow-0 border">
           <div class="card-body">
-            <div class="d-flex justify-content-between">
+            <!-- <div class="d-flex justify-content-between">
               <p class="mb-2">Total price:</p>
               <p class="mb-2" id = "totalPrice"></p>
-            </div>
+            </div> -->
             <div class="d-flex justify-content-between">
               <p class="mb-2">Discount:</p>
               <p class="mb-2 text-success">Rs 000</p>
@@ -561,7 +561,7 @@ rel="stylesheet"
     renderCart();
     alert("Added to cart!");
   }
-
+  
   function renderCart() {
     selectedProductDiv.innerHTML = '';
     cartItems.forEach(product => {
@@ -587,8 +587,8 @@ rel="stylesheet"
       const multiplyButton = document.createElement('button');
       const multiplyButton1 = document.createElement('button');
       const totalDisplay = document.getElementById('totalPrice');
-      multiplyButton.textContent = `+Add`;
-      multiplyButton1.textContent = '-Remove';
+      multiplyButton.textContent = '+1 items';
+      multiplyButton1.textContent = '-1 items';
       multiplyButton.className = 'multiply-button';
       multiplyButton1.className = 'multiply-button1';
       multiplyButton.dataset.productName = product.name;
@@ -606,19 +606,18 @@ rel="stylesheet"
           totalDisplay.textContent = `Rs ${totalPrice.toFixed(2)} /-`;
         }
       });
+      
       multiplyButton1.addEventListener('click', function(){
         const productName = this.dataset.productName;
 
         const priceDisplay = productDiv.querySelector('.cart-item-price');
-        if (priceDisplay) {
-          if(product.multiplier >= 2){
-            product.multiplier -= 1;
-          }
+        if(priceDisplay && product.multiplier >= 2){
+          product.multiplier -= 1;
           const displayedPrice = product.price * product.multiplier;
           priceDisplay.innerHTML = `Rs ${displayedPrice.toFixed(2)} /- <div class = "perItem">Rs ${product.price}/- /perItem</div>`;
 
           totalPrice = totalPrice - displayedPrice;
-          totalDisplay.textContent = `Rs ${totalPrice.toFixed(2)}/-`;
+          totalDisplay.textContent = `Rs ${totalPrice.toFixed(2)}/-`;        
         }
       });
 
@@ -632,22 +631,11 @@ rel="stylesheet"
         updateCart(productName, null, null, true);
       });
 
-      const checkoutLink = document.createElement('a');
-      checkoutLink.href = 'checkout.html';
-      checkoutLink.className = 'checkout-link';
-
-      const checkoutButton = document.createElement('button');
-      checkoutButton.textContent = 'Check Out';
-
-      checkoutLink.appendChild(checkoutButton);
-
       productDiv.appendChild(productImage);
       productDiv.appendChild(multiplyButton);
       productDiv.appendChild(multiplyButton1);
       productDiv.appendChild(priceDisplay);
       productDiv.appendChild(removeButton);
-      productDiv.appendChild(checkoutLink);
-
       selectedProductDiv.appendChild(productDiv);
     });
     const removeFromCartButtons = document.querySelectorAll('.remove-from-cart-button');
@@ -658,13 +646,7 @@ rel="stylesheet"
         updateCart(productName, null, null, true);
       });
     });
-    if (index < cartItems.length - 1) {
-      const horizontalLine = document.createElement('hr');
-      selectedProductDiv.appendChild(horizontalLine);
-    }
-
   }
-
   renderCart();
 });
   </script> 
