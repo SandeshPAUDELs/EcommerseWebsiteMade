@@ -135,18 +135,19 @@ rel="stylesheet"
 <!-- cart + summary -->
 
 </div>
- <div class="container">
+<div class="container">
   <div class="cart-container">
     <div id="selected-product"></div>
     </div>
- </div>
+    </div>
+
 <!-- YO chai Javascript bata aayeko lagi hai -->
 <div class="container">
   <div class="cart-container">
     <div id="selected-product">
       <div id="cart-images" class="cart-images"></div>
     </div>
-  </div>
+  </div></div>
 
 <section class="bg-light my-5">
   <!-- Added to cart Items are displayed Here -->
@@ -502,11 +503,55 @@ rel="stylesheet"
 </footer>
 
 <script>
+document.addEventListener('DOMContentLoaded', function () {
+    // const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const selectedProductContainer = document.getElementById('selected-product');
+    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || []; // This is from JavaScript script.js which is in index.html 
+    function updateCartContent() {
+        selectedProductContainer.innerHTML = '';
+        // cartItems is given from index.html files
+    cartItems.forEach((item, index) => {
+      const productDiv = document.createElement('div');
+      productDiv.className = 'cart-item';
+      
+            let initialPrice  = parseFloat(item.price.replace(/\D+/g, '')) * item.quantity;
+            let totalPrice = initialPrice;
+      productDiv.innerHTML = `
+      <img style = "width: 100px; height: 100px;" src="${item.ImageUrl}" alt="${item.name}" class="cart-item-image">
+      <div class="left">
+                   <select style="width: 100px;" class="form-select me-4">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+       <p class = "left"><strong>Name:</strong> ${item.name}</p>
+        <p class = "left"><strong>Price:</strong>${item.price}</p>
+        <button style = "height: 30px; margin-top: 5px;" class="btn text-danger remove-button" data-index="${index}">Remove</button>
+      `;
+      selectedProductContainer.appendChild(productDiv);
+  });
+  const removeButtons = document.querySelectorAll('.remove-button');
+  removeButtons.forEach(button => {
+    button.addEventListener('click', removeFromCart);
+  });
 
+  function removeFromCart(event) {
+  const itemIndex = parseInt(event.target.dataset.index);
+  if (!isNaN(itemIndex) && itemIndex >= 0 && itemIndex < cartItems.length) {
+    cartItems.splice(itemIndex, 1); // Remove the item from the index
+    localStorage.setItem('cartItems', JSON.stringify(cartItems)); // Update local storage
+    updateCartContent(); // Update the displayed cart content
+  }
+}     
+    }
+    updateCartContent();
+});
 
     </script>
-    
 <script>
+  
     document.addEventListener('DOMContentLoaded', function () {
       const selectedProductDiv = document.getElementById('selected-product');
       let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
@@ -548,31 +593,32 @@ rel="stylesheet"
           const productDiv = document.createElement('div');
           productDiv.className = 'cart-item';
 
-          const userInput = document.createElement('input');
-          userInput.type = 'number';
-          userInput.min = 1,
-          userInput.className = 'form-control';
-          userInput.dataset.name = product.name;
-          userInput.dataset.price = product.price;
-          userInput.dataset.value = parseInt(product.quantity);
-          // userInput.dataset.value = 2;
+          const quantityInput = document.createElement('input');
+          quantityInput.type = 'number';
+          quantityInput.min = 1;
+          quantityInput.className = 'form-control quantity-input';
+          quantityInput.dataset.name = product.name;
+          quantityInput.dataset.price = product.price;
+          quantityInput.value = product.quantity;
 
-          userInput.addEventListener('input', (event) => {
-            const quantity = parseInt(event.target.value);
+          // Modify the input event listener
+          quantityInput.addEventListener('input', (event) => {
+            const enteredQuantity = parseInt(event.target.value);
             const productName = event.target.dataset.name;
             const productPrice = parseFloat(event.target.dataset.price);
-            updateCart(productName, null, null, false, quantity);
-            const updatedPrice= productDiv.querySelector('.cart-item-name');
-            if(updatedPrice){
-              const totalPrice = updatedPrice * quantity;
-              updatedPrice.textContent = `${totalPrice}`;
+
+            updateCart(productName, null, null, false, enteredQuantity);
+            const priceParagraph = productDiv.querySelector('.cart-item-price');
+            if (priceParagraph) {
+              const totalPrice = productPrice * enteredQuantity;
+              priceParagraph.textContent = `Rs ${totalPrice.toFixed(2)}`;
             }
           });
 
           productDiv.innerHTML = `
             <img style="width: 100px; height: 100px;" src="${product.image}" alt="${product.name}" />
             <div class="product-no-input">
-              ${userInput.outerHTML}
+              ${quantityInput.outerHTML}
             </div>
             <p class="left cart-item-price">Rs ${product.price}</p>
             <p class="left cart-item-name">${product.name}</p>
@@ -584,8 +630,6 @@ rel="stylesheet"
             </div>
           `;
           selectedProductDiv.appendChild(productDiv);
-          console.log(product.image, product.price, product.name, userInput.value)
-          
         });
         const removeFromCartButtons = document.querySelectorAll('.remove-from-cart-button');
     removeFromCartButtons.forEach(button => {
@@ -601,7 +645,7 @@ rel="stylesheet"
     });
 
 
-//     document.addEventListener('DOMContentLoaded', function () {
+//   document.addEventListener('DOMContentLoaded', function () {
 //   const selectedProductDiv = document.getElementById('selected-product');
 //   let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
 
@@ -623,6 +667,7 @@ rel="stylesheet"
 //       alert("Item is already in the cart.");
 //       return;
 //     }
+
 //     cartItems.push({
 //       name: productName,
 //       image: productImage,
@@ -640,45 +685,53 @@ rel="stylesheet"
 //     cartItems.forEach(product => {
 //       const productDiv = document.createElement('div');
 //       productDiv.className = 'cart-item';
-//       const userInput = document.createElement('input');
-//       userInput.type = 'number';
-//       userInput.min = 1;
-//       userInput.className = 'form-control';
-//       userInput.dataset.name = product.name;
-//       userInput.dataset.price = product.price;
-//       userInput.value = product.quantity; // Set the initial value
+      
+//       const quantityDropdown = document.createElement('select');
+//       quantityDropdown.style.width = '100px';
+//       quantityDropdown.className = 'form-select quantity-dropdown';
+//       quantityDropdown.dataset.name = product.name;
+//       quantityDropdown.dataset.price = product.price;
+//       // quantityDropdown.dataset.name = product.name;
 
-//       userInput.addEventListener('input', (event) => {
-//         const quantity = parseInt(event.target.value);
+
+//       for (let i = 1; i <= 4; i++) {
+//         const option = document.createElement('option');
+//         option.value = i;
+//         option.text = i;
+//         quantityDropdown.appendChild(option);
+//       }
+      
+//       quantityDropdown.value = product.quantity;
+
+//       quantityDropdown.addEventListener('change', (event) => {
+//         const selectedQuantity = parseInt(event.target.value);
 //         const productName = event.target.dataset.name;
 //         const productPrice = parseFloat(event.target.dataset.price);
         
-//         const updatedPrice = quantity * productPrice; // Calculate the updated price
-        
-//         updateCart(productName, null, null, false, quantity);
-
-//         const totalPriceElement = productDiv.querySelector('.cart-item-price');
-//         if (totalPriceElement) {
-//           totalPriceElement.textContent = `${updatedPrice.toFixed(2)}`;
+//         updateCart(productName, null, null, false, selectedQuantity);
+//         const priceParagraph = productDiv.querySelector('.cart-item-price');
+//         if (priceParagraph) {
+//           const totalPrice = productPrice * selectedQuantity;
+//           priceParagraph.textContent = `Rs ${totalPrice.toFixed(2)}`;
 //         }
 //       });
+
 //       productDiv.innerHTML = `
-//             <img style="width: 100px; height: 100px;" src="${product.image}" alt="${product.name}" />
-//             <div class="product-no-input">
-//               ${userInput.outerHTML}
-//             </div>
-//             <p class="left cart-item-price">Rs ${product.price}</p>
-//             <p class="left cart-item-name">${product.name}</p>
-//             <div>
-//               <button style="height: 30px; margin-top: 5px;" class="remove-from-cart-button">Remove</button>
-//               <a class="checkout-form-cart bg-secondary text-dark" href="checkout.html">
-//                 <button>CheckOut</button>
-//               </a>
-//             </div>
-//           `;
+//         <img style="width: 100px; height: 100px;" src="${product.image}" alt="${product.name}" />
+//         <div class="left">
+//           ${quantityDropdown.outerHTML}
+//         </div>
+//         <p class="left cart-item-price">Rs ${product.price}</p>
+//         <p class="left cart-item-name">${product.name}</p>
+
+//         <div>
+//           <button style="height: 30px; margin-top: 5px;" class="remove-from-cart-button">Remove</button>
+//           <a class = "checkout-form-cart bg-secondary text-dark" href = "checkout.html"><button>CheckOut</button></a>
+//           </div>
+//       `;
 //       selectedProductDiv.appendChild(productDiv);
 //     });
-      
+
 //     const removeFromCartButtons = document.querySelectorAll('.remove-from-cart-button');
 //     removeFromCartButtons.forEach(button => {
 //       button.addEventListener('click', function () {
@@ -688,10 +741,108 @@ rel="stylesheet"
 //       });
 //     });
 //   }
+
 //   renderCart();
+
+//   const addToCartButtons = document.querySelectorAll('.add-to-cart-button');
+//   addToCartButtons.forEach(button => {
+//     button.addEventListener('click', function () {
+//       const productDiv = this.closest('.card');
+//       const productName = productDiv.querySelector('.card-title').textContent;
+//       const productImage = productDiv.querySelector('.card-img-top').getAttribute('src');
+//       const productPrice = parseFloat(productDiv.querySelector('.card-text').textContent.replace(/\D+/g, ''));
+      
+//       updateCart(productName, productImage, productPrice, false);
+//     });
+//   });
 // });
 
+
+// document.addEventListener('DOMContentLoaded', function () {
+//   const selectedProductDiv = document.getElementById('selected-product');
+//   let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+
+//   function updateCart() {
+//     selectedProductDiv.innerHTML = '';
+
+//     cartItems.forEach(product => {
+//       const productDiv = document.createElement('div');
+//       productDiv.className = 'cart-item';
+
+//       const quantityDropdown = document.createElement('select');
+//       quantityDropdown.style.width = '100px';
+//       quantityDropdown.className = 'form-select quantity-dropdown';
+
+//       for (let i = 1; i <= 4; i++) {
+//         const option = document.createElement('option');
+//         option.value = i;
+//         option.text = i;
+//         quantityDropdown.appendChild(option);
+//       }
+
+//       quantityDropdown.addEventListener('change', (event) => {
+//         const selectedQuantity = parseInt(event.target.value);
+//         product.quantity = selectedQuantity;
+//         updateCart();
+//       });
+
+//       const totalPrice = product.price * product.quantity;
+
+//       productDiv.innerHTML = `
+//         <img style="width: 100px; height: 100px;" src="${product.image}" alt="${product.name}" />
+//         <div class="left">
+//           ${quantityDropdown.outerHTML}
+//         </div>
+//         <p class="left cart-item-name">${product.name}</p>
+//         <p class="left cart-item-price">Rs ${totalPrice.toFixed(2)}</p>
+//         <button style="height: 30px; margin-top: 5px;" class="remove-from-cart-button">Remove</button>
+//         <a class = "checkout-form-cart bg-secondary text-dark" href = "checkout.html"><button>CheckOut</button></a>
+
+//       `;
+
+//       selectedProductDiv.appendChild(productDiv);
+//     });
+
+//     const removeFromCartButtons = document.querySelectorAll('.remove-from-cart-button');
+//     removeFromCartButtons.forEach(button => {
+//       button.addEventListener('click', function () {
+//         const productName = this.parentElement.querySelector('.cart-item-name').textContent;
+//         cartItems = cartItems.filter(item => item.name !== productName);
+//         localStorage.setItem('cart', JSON.stringify(cartItems));
+//         updateCart();
+//       });
+//     });
+//   }
+
+//   const addToCartButtons = document.querySelectorAll('.add-to-cart-button');
+//   addToCartButtons.forEach(button => {
+//     button.addEventListener('click', function () {
+//       const productDiv = this.closest('.card');
+//       const productName = productDiv.querySelector('.card-title').textContent;
+//       const productImage = productDiv.querySelector('.card-img-top').getAttribute('src');
+//       const productPrice = parseFloat(productDiv.querySelector('.card-text').textContent.replace(/\D+/g, ''));
+
+//       const existingItem = cartItems.find(item => item.name === productName);
+//       if (existingItem) {
+//         existingItem.quantity++;
+//       } else {
+//         cartItems.push({
+//           name: productName,
+//           image: productImage,
+//           price: productPrice,
+//           quantity: 1
+//         });
+//       }
+
+//       localStorage.setItem('cart', JSON.stringify(cartItems));
+//       updateCart();
+//     });
+//   });
+
+//   updateCart();
+// });
 </script>
+
     <script src = "js/script2.js"></script>
     <script src = "js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
@@ -703,4 +854,3 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"
 ></script>
 </body>
 </html>
-
