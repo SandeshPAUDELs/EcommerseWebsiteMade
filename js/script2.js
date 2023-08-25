@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function () {
     
     if (existingItem) {
       // alert("Item is already in the cart.");
-    
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -47,4 +46,58 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-// Add to cart in Shopping cart.html
+// Add to cart javascript code are under shopping-cart.html bhitra <script> 
+
+
+// These code are for payment form
+
+const paymentform_control = document.querySelector('form');
+const main = document.querySelector('.main');
+let indexx = 1; 
+let submittedForm = [];
+if(localStorage.getItem('submittedForm')){
+submittedForm = JSON.parse(localStorage.getItem('submittedForm'));
+}
+Display();
+paymentform_control.addEventListener("submit", function(event){
+event.preventDefault();
+const Firstname = document.getElementById('form6Example1').value;
+const Lastname = document.getElementById('form6Example2').value;
+const BankName = document.getElementById('form6Example3').value;
+const AccountNumber = document.getElementById('form6Example4').value;
+const Data = {Firstname, Lastname, BankName, AccountNumber};
+submittedForm.push(Data);
+localStorage.setItem('submittedForm', JSON.stringify(submittedForm));
+Display();
+indexx ++;
+});
+function Display(){
+const NewsubmittedForm = submittedForm[submittedForm.length - 1];
+const table = document.createElement("table");
+table.innerHTML = 
+`
+<tr>
+<th><span onclick = 'deleteSubmission()'>Remove</span></th>
+</tr>
+<tr>
+<td>FirstName: ${NewsubmittedForm.Firstname} </td>
+</tr>
+<tr>
+<td>LastName: ${NewsubmittedForm.Lastname} </td>
+</tr>
+<tr>
+<td>BankName: ${NewsubmittedForm.BankName} </td>
+</tr>
+<tr>
+<td>AccountNumber: ${NewsubmittedForm.AccountNumber}</td>
+</tr>
+`;
+main.appendChild(table);
+}
+
+function deleteSubmission(index) {
+submittedForm.splice(index, 1); // Remove the submission at the given index
+localStorage.setItem("submittedForm", JSON.stringify(submittedForm));
+main.innerHTML = ""; // Clear the container
+Display();
+}
