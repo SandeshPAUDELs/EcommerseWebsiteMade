@@ -546,7 +546,14 @@ rel="stylesheet"
 
     const existingItem = cartItems.find(item => item.name === productName);
     if (existingItem) {
-      alert("Item is already in the cart.");
+      // alert("Item is already in the cart.");
+      Swal.fire({
+  position: 'top-end',
+  icon: 'success',
+  title: 'Items is already in the cart',
+  showConfirmButton: false,
+  timer: 1500
+})
       return;
     }
 
@@ -559,7 +566,14 @@ rel="stylesheet"
 
     localStorage.setItem("cart", JSON.stringify(cartItems));
     renderCart();
-    alert("Added to cart!");
+    // alert("Added to cart!");
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Items is added to cart',
+      showConfirmButton: false,
+      timer: 1500
+    })
   }
   
   function renderCart() {
@@ -587,8 +601,11 @@ rel="stylesheet"
       const multiplyButton = document.createElement('button');
       const multiplyButton1 = document.createElement('button');
       const totalDisplay = document.getElementById('totalPrice');
-      multiplyButton.textContent = '+1 items';
+      multiplyButton.textContent = `+1 items`;
       multiplyButton1.textContent = '-1 items';
+      const iconContainer1 = document.getElementById('iconContainer1');
+      const iconContainer2 = document.getElementById('iconContainer2');
+      
       multiplyButton.className = 'multiply-button';
       multiplyButton1.className = 'multiply-button1';
       multiplyButton.dataset.productName = product.name;
@@ -627,10 +644,16 @@ rel="stylesheet"
       removeButton.dataset.productName = product.name;
 
       removeButton.addEventListener('click', function () {
+        Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Item is removed from the cart',
+      showConfirmButton: false,
+      timer: 1500
+    })
         const productName = this.dataset.productName;
         updateCart(productName, null, null, true);
       });
-
       productDiv.appendChild(productImage);
       productDiv.appendChild(multiplyButton);
       productDiv.appendChild(multiplyButton1);
