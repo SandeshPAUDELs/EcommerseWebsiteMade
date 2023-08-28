@@ -64,11 +64,8 @@ form .form-outline .form-control{
     border: 1px solid rgb(232, 238, 232);
 
 }
-table tbody tr td{
-    border: 1px solid black;
-}
+
 table thead tr th{
-    border: 1px solid black;
     width: 200px;
 }
 table tbody tr td span{
