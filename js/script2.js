@@ -51,6 +51,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // These code are for payment form
 
+
+
+
 const paymentform_control = document.querySelector('form');
 const main = document.querySelector('.main');
 let indexx = 1; 
@@ -65,13 +68,16 @@ const Firstname = document.getElementById('form6Example1').value;
 const Lastname = document.getElementById('form6Example2').value;
 const BankName = document.getElementById('form6Example3').value;
 const AccountNumber = document.getElementById('form6Example4').value;
-const Data = {Firstname, Lastname, BankName, AccountNumber};
+const PaymentGateway = document.querySelector('input[name="payment Gateway"]:checked').value;
+
+const Data = {Firstname, Lastname, BankName, AccountNumber, PaymentGateway};
 submittedForm.push(Data);
 localStorage.setItem('submittedForm', JSON.stringify(submittedForm));
 Display();
 indexx ++;
 });
 function Display(){
+  main.innerHTML = "";
 const NewsubmittedForm = submittedForm[submittedForm.length - 1];
 const table = document.createElement("table");
 table.innerHTML = 
@@ -91,6 +97,9 @@ table.innerHTML =
 <tr>
 <td>AccountNumber: ${NewsubmittedForm.AccountNumber}</td>
 </tr>
+<tr>
+<td>Payment Gateway: ${NewsubmittedForm.PaymentGateway}</td>
+</tr>
 `;
 main.appendChild(table);
 }
@@ -98,6 +107,6 @@ main.appendChild(table);
 function deleteSubmission(index) {
 submittedForm.splice(index, 1); // Remove the submission at the given index
 localStorage.setItem("submittedForm", JSON.stringify(submittedForm));
-main.innerHTML = ""; // Clear the container
+main.innerHTML = "";
 Display();
 }

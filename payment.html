@@ -142,13 +142,13 @@ rel="stylesheet"
     <div class="col">
       <div class="form-outline">
         <input type="text" id="form6Example1" class="form-control" required />
-        <label class="form-label" for="form6Example1">First name</label>
+        <label class="form-label" for="form6Example1" name = "firstName">First name</label>
       </div>
     </div>
     <div class="col">
       <div class="form-outline">
         <input type="text" id="form6Example2" class="form-control" required />
-        <label class="form-label" for="form6Example2">Last name</label>
+        <label class="form-label" for="form6Example2" name = "lastName">Last name</label>
       </div>
     </div>
   </div>
@@ -156,20 +156,19 @@ rel="stylesheet"
   <!-- Text input -->
   <div class="form-outline mb-4">
     <input type="text" id="form6Example3" class="form-control" required/>
-    <label class="form-label" for="form6Example3">Bank name</label>
+    <label class="form-label" for="form6Example3" name = "bankName">Bank name</label>
   </div>
-
   <!-- Text input -->
   <div class="form-outline mb-4">
     <input type="number" id="form6Example4" class="form-control" required/>
-    <label class="form-label" for="form6Example4">Account Number</label>
+    <label class="form-label" for="form6Example4" name = "accountNumber">Account Number</label>
   </div>
   <div class="form-outline mb-4 text-center">
-    <label class="form-label text-muted" for="form6Example4">Select Your Payment Gateway</label>
-    <input type="radio" name = "payment Gateway" value = "E-Sewa">
+    <label class="form-label text-muted" for="form6Example5">Select Your Payment Gateway</label>
+    <input type="radio" name = "payment Gateway" id = "eSewaRadio" value = "E-Sewa">
     <label class="form-label" for="E-sewa">E-sewa</label>
-    <input type="radio" name = "payment Gateway" value = "Khalti">
-    <label class="form-outline" for="E-sewa">Khalti</label>
+    <input type="radio" name = "payment Gateway" id = "KhaltiRadio" value = "Khalti">
+    <label class="form-outline" for="Khalti">Khalti</label>
   </div>
   <div class="form-outline mb-4">
     <button type="submit" class="btn btn-primary btn-block mb-4" onclick = "submit()">Submit</button>
@@ -188,7 +187,70 @@ rel="stylesheet"
     })
     }
   </script>
-  
+  <!--
+  <script>
+  const paymentform_control = document.querySelector('form');
+const main = document.querySelector('.main');
+
+let indexx = 1; 
+let submittedForm = [];
+if(localStorage.getItem('submittedForm')){
+submittedForm = JSON.parse(localStorage.getItem('submittedForm'));
+}
+Display();
+
+paymentform_control.addEventListener("submit", function(event){
+event.preventDefault();
+// const eSewaRadio = document.getElementById("eSewaRadio");
+// const khaltiRadio = document.getElementById("khaltiRadio");
+// const PaymentGateway = eSewaRadio.checked
+//   ? eSewaRadio.value
+//   : khaltiRadio.checked
+//   ? khaltiRadio.value
+//   : "";
+const Firstname = document.getElementById('form6Example1').value;
+const Lastname = document.getElementById('form6Example2').value;
+const BankName = document.getElementById('form6Example3').value;
+const AccountNumber = document.getElementById('form6Example4').value;
+const Data = {Firstname, Lastname, BankName, AccountNumber};
+
+submittedForm.push(Data);
+localStorage.setItem('submittedForm', JSON.stringify(submittedForm));
+Display();
+indexx ++;
+});
+
+function Display(){
+  main.innerHTML = "";
+const NewsubmittedForm = submittedForm[submittedForm.length - 1];
+const table = document.createElement("table");
+table.innerHTML = 
+`
+<tr>
+<th><span onclick = 'deleteSubmission()'>Remove</span></th>
+</tr>
+<tr>
+<td>FirstName: ${NewsubmittedForm.Firstname} </td>
+</tr>
+<tr>
+<td>LastName: ${NewsubmittedForm.Lastname} </td>
+</tr>
+<tr>
+<td>BankName: ${NewsubmittedForm.BankName} </td>
+</tr>
+<tr>
+<td>AccountNumber: ${NewsubmittedForm.AccountNumber}</td>
+`;
+main.appendChild(table);
+}
+
+function deleteSubmission(index) {
+submittedForm.splice(index, 1); // Remove the submission at the given index
+localStorage.setItem("submittedForm", JSON.stringify(submittedForm));
+main.innerHTML = ""; 
+Display();
+}
+  </script> -->
 <script src = "js/script.js"></script>
 <script src="js/script2.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
