@@ -3,9 +3,10 @@ document.addEventListener('DOMContentLoaded', function () {
   const selectedProductDiv = document.getElementById('selected-product');
   let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
 
-  function updateCart(productName, productImage, productPrice) {
+  function updateCart(productName, productImage, productPrice, productId) {
     // function updateCart(productName, productImage, productPrice, productId){
-    const existingItem = cartItems.find(item => item.name === productName);
+      const existingItem = cartItems.find(item => item.id === productId);
+
     // const existingItem = cartItems.findIndex(item => item.id === productId);
     if (existingItem) {
       Swal.fire({
@@ -18,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     
     cartItems.push({
-      // id: productId,
+      id: productId,
       name: productName,
       image: productImage,
       price: productPrice
@@ -26,13 +27,13 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     localStorage.setItem("cart", JSON.stringify(cartItems));
-    // alert("Added to cart!");
+
     Swal.fire({
       position: 'top-end',
       icon: 'success',
       title: 'Items is added to cart',
       showConfirmButton: false,
-      timer: 1500
+      timer: 1000
     })
   }
   
@@ -52,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   
 
-// Add to cart contents are under shopping-cart.html 
+
 
 
 
@@ -122,83 +123,3 @@ localStorage.setItem("submittedForm", JSON.stringify(submittedForm));
 main.innerHTML = "";
 Display();
 }
-
-/* 
-// ...
-
-function updateCart(productName, productImage, productPrice, productId, isRemoveButton) {
-  const existingItemIndex = cartItems.findIndex(item => item.id === productId);
-
-  // ...
-
-  cartItems.push({
-    id: productId,        // Add the unique ID here
-    name: productName,
-    image: productImage,
-    price: productPrice,
-    quantity: selectedQuantity
-  });
-
-  localStorage.setItem("cart", JSON.stringify(cartItems));
-  renderCart();
-
-  // ...
-}
-
-// ...
-
-*/
-
-
-/*  document.addEventListener('DOMContentLoaded', function () {
-  const selectedProductDiv = document.getElementById('selected-product');
-  const totalDisplay = document.getElementById('totalPrice');
-
-  // Retrieve cart items from local storage
-  const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-
-  function removeFromCart(productId) {
-    // Remove the item with the matching ID from the cart
-    const updatedCartItems = cartItems.filter(item => item.id !== productId);
-
-    // Update local storage and re-render cart
-    localStorage.setItem('cart', JSON.stringify(updatedCartItems));
-    renderCart(updatedCartItems);
-  }
-
-  function renderCart(items) {
-    selectedProductDiv.innerHTML = '';
-    
-    items.forEach(product => {
-      const productDiv = document.createElement('div');
-      productDiv.className = 'cart-item';
-      
-      // ... (create product elements similar to your existing code)
-      
-      // Create Remove button for each item
-      const removeButton = document.createElement('button');
-      removeButton.textContent = 'Remove from Cart';
-      removeButton.className = 'remove-from-cart-button';
-      removeButton.dataset.productId = product.id;
-
-      removeButton.addEventListener('click', function () {
-        const productId = this.dataset.productId;
-        removeFromCart(productId);
-      });
-
-      productDiv.appendChild(removeButton);
-      selectedProductDiv.appendChild(productDiv);
-    });
-
-    // Calculate and display the total price
-    const totalPrice = items.reduce((total, product) => {
-      return total + (product.price * product.quantity);
-    }, 0);
-
-    totalDisplay.textContent = `Rs ${totalPrice.toFixed(2)} /-`;
-  }
-
-  // Initial render of the cart
-  renderCart(cartItems);
-});
- */
