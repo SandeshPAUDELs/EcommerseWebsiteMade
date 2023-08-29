@@ -65,9 +65,6 @@ form .form-outline .form-control{
 
 }
 
-table thead tr th{
-    width: 200px;
-}
 table tbody tr td span{
     color: rgb(234, 157, 157);
     cursor: pointer;

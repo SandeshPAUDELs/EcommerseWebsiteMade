@@ -84,10 +84,10 @@ rel="stylesheet"
             aria-labelledby="navbarDropdownMenuLink"
           >
             <li>
-              <a class="dropdown-item" href="#">Some news</a>
+              <a class="dropdown-item" href="history.html">Purchased Histroy</a>
             </li>
             <li>
-              <a class="dropdown-item" href="#">Another news</a>
+              <a class="dropdown-item" href="#">Some news</a>
             </li>
             <li>
               <a class="dropdown-item" href="#">Something else here</a>
@@ -548,7 +548,7 @@ rel="stylesheet"
   icon: 'success',
   title: 'Items is already in the cart',
   showConfirmButton: false,
-  timer: 1500
+  timer: 1000
 })
       return;
     }
@@ -568,10 +568,11 @@ rel="stylesheet"
       icon: 'success',
       title: 'Items is added to cart',
       showConfirmButton: false,
-      timer: 1500
+      timer: 1000
     })
   }
-  
+
+  // This function is to display the Add to cart items to shopping-cart 
   function renderCart() {
     selectedProductDiv.innerHTML = '';
     cartItems.forEach(product => {
@@ -587,7 +588,6 @@ rel="stylesheet"
       const priceDisplay = document.createElement('h5');
       priceDisplay.className = 'left cart-item-price';
       priceDisplay.textContent = `Rs ${product.price}/-`;
-
 
       if (product.multiplier === undefined) {
         product.multiplier = 1;
@@ -645,7 +645,7 @@ rel="stylesheet"
       icon: 'success',
       title: 'Item is removed from the cart',
       showConfirmButton: false,
-      timer: 1500
+      timer: 1000
     })
         const productName = this.dataset.productName;
         updateCart(productName, null, null, true);
@@ -669,6 +669,8 @@ rel="stylesheet"
   renderCart();
 });
   </script>
+
+
     <script src = "js/script2.js"></script>
     <script src = "js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>

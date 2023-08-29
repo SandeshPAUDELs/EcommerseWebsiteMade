@@ -133,7 +133,7 @@ rel="stylesheet"
     <!-- Container wrapper -->
   </nav>
 
-
+  <div id="table-container"></div>
   <div class="main"></div> <!--  Local Storage Data comes here  -->
 
 <form action="">
@@ -183,10 +183,59 @@ rel="stylesheet"
       icon: 'success',
       title: 'Payment Success',
       showConfirmButton: false,
-      timer: 1500
+      timer: 1000
     })
     }
   </script>
+  <!---
+  <script>
+
+  document.addEventListener('DOMContentLoaded', function () {
+  const tableContainer = document.getElementById('table-container');
+  const main = document.querySelector('.main');
+  const selectedProductDiv = document.getElementById('selected-product');
+  
+  const submittedForm = JSON.parse(localStorage.getItem('submittedForm')) || [];
+  const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+
+  // Display data from the first local storage source
+  function displaySubmittedForm() {
+    main.innerHTML = "";
+    const table = document.createElement("table");
+    table.className = "table align-middle mb-0 bg-white";
+    table.innerHTML = `
+      <thead class="bg-light">
+        <tr>
+          <th class="text-center">First Name</th>
+          <th class="text-center">Last Name</th>
+          <th class="text-center">Bank Name</th>
+          <th class="text-center">Account Number</th>
+          <th class="text-center">Payment Gateway</th>
+          <th class="text-center"></th>
+        </tr>
+      </thead>
+      <tbody id="table-body1"></tbody>
+    `;
+    main.appendChild(table);
+    const tableBody1 = document.getElementById("table-body1");
+
+    submittedForm.forEach(formData => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td class="text-center">${formData.Firstname}</td>
+        <td class="text-center">${formData.Lastname}</td>
+        <td class="text-center">${formData.BankName}</td>
+        <td class="text-center">${formData.AccountNumber}</td>
+        <td class="text-center">${formData.PaymentGateway}</td>
+        <td><span onclick='deleteSubmission()'>Remove</span></td>
+      `;
+      tableBody1.appendChild(row);
+    });
+  }
+  displaySubmittedForm();
+});
+
+  </script> -->
   
 <script src = "js/script.js"></script>
 <script src="js/script2.js"></script>
