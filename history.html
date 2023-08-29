@@ -20,133 +20,68 @@
             <!-- Data will be added here using JavaScript -->
         </tbody>
     </table>
-
     <script>
-        // Retrieve data from local storage and populate the table
-        function populateTable() {
-            const tableBody = document.getElementById('table-body');
-            const submittedForm = JSON.parse(localStorage.getItem('submittedForm'));
-            const cartItems = JSON.parse(localStorage.getItem('cartItems'));
+        // Code to store data in local Storage
+        // Replace 'itemID' with the actual ID and 'itemData' with the actual data
+const LocalData = 'table-body';
+const itemData = {Firstname, Lastname, BankName, AccountNumber, PaymentGateway};
 
-            if (submittedForm) {
-                submittedForm.forEach(formData => {
-                    const row = document.createElement('tr');
-                    const firstNameCell = document.createElement('td');
-                    firstNameCell.textContent = formData.Firstname;
-                    const lastNameCell = document.createElement('td');
-                    lastNameCell.textContent = formData.Lastname;
-                    const bankNameCell = document.createElement('td');
-                    bankNameCell.textContent = formData.BankName;
-                    const accountNumberCell = document.createElement('td');
-                    accountNumberCell.textContent = formData.AccountNumber;
-                    const paymentGatewayCell = document.createElement('td');
-                    paymentGatewayCell.textContent = formData.PaymentGateway;
+// Retrieve existing items from local storage (if any)
+const existingItems = JSON.parse(localStorage.getItem('items')) || {};
 
-                    row.appendChild(firstNameCell);
-                    row.appendChild(lastNameCell);
-                    row.appendChild(bankNameCell);
-                    row.appendChild(accountNumberCell);
-                    row.appendChild(paymentGatewayCell);
+// Add or update the specific item
+existingItems[LocalData] = itemData;
 
-                    tableBody.appendChild(row);
-                });
-            }
-            if (cartItems) {
-    cartItems.forEach(cartItem => {
-        const row = document.createElement('tr');
+// Save the updated items object back to local storage
+localStorage.setItem('items', JSON.stringify(existingItems));
 
-        // Create a cell for product name
-        const productNameCell = document.createElement('td');
-        productNameCell.textContent = cartItem.productName;
-        row.appendChild(productNameCell);
+Display();
 
-        // Create a cell for quantity
-        const quantityCell = document.createElement('td');
-        quantityCell.textContent = cartItem.quantity;
-        row.appendChild(quantityCell);
+// Code to display data in local Storage
 
-        // Create a cell for price
-        const priceCell = document.createElement('td');
-        priceCell.textContent = cartItem.price;
-        row.appendChild(priceCell);
 
-        // Append the row to the table body
-        tableBody.appendChild(row);
-    });
+function Display(){
+    const itemID = 'table-body';
+
+// Retrieve items from local storage
+const existingItems = JSON.parse(localStorage.getItem('items')) || {};
+
+// Get the item with the specified ID
+const specificItem = existingItems[itemID];
+if (specificItem) {
+  // Do something with the specificItem
+} else {
+  // Item with the given ID not found
+}
 }
 
 
-        }
 
-        // Call the function to populate the table when the page loads
-        window.onload = populateTable;
+// Code to remove data in local Storage
+
+const itemID = 'yourSpecificID';
+
+// Retrieve items from local storage
+const existingItems = JSON.parse(localStorage.getItem('items')) || {};
+
+// Check if the item exists before removing
+if (existingItems.hasOwnProperty(itemID)) {
+  delete existingItems[itemID];
+
+  // Save the updated items object back to local storage
+  localStorage.setItem('items', JSON.stringify(existingItems));
+
+  console.log(`Item with ID ${itemID} has been removed.`);
+} else {
+  console.log(`Item with ID ${itemID} not found.`);
+}
+
+
+
     </script>
     <script src = "script2.js"></script>
     <script src = "script.js"></script>
 </body>
-</html> -->
-
-
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Local Storage Data Display</title>
-</head>
-<body>
-    <h1>Local Storage Data</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Key</th>
-                <th>Value</th>
-            </tr>
-        </thead>
-        <tbody id="table-body">
-            <!-- Data will be added here using JavaScript -->
-        </tbody>
-    </table>
-<!--
-    <script>
-        // Retrieve data from local storage and populate the table
-        function populateTable() {
-            const tableBody = document.getElementById('table-body');
-            const submittedForm = JSON.parse(localStorage.getItem('submittedForm'));
-            const cartItems = JSON.parse(localStorage.getItem('cartItems'));
-
-            // Display submittedForm data
-            if (submittedForm) {
-                submittedForm.forEach(formData => {
-                    const row = document.createElement('tr');
-                    const keyCell = document.createElement('td');
-                    keyCell.textContent = 'submittedForm';
-                    const valueCell = document.createElement('td');
-                    valueCell.textContent = JSON.stringify(formData);
-                    row.appendChild(keyCell);
-                    row.appendChild(valueCell);
-                    tableBody.appendChild(row);
-                });
-            }
-
-            // Display cartItems data
-            if (cartItems) {
-                cartItems.forEach(cartItem => {
-                    const row = document.createElement('tr');
-                    const keyCell = document.createElement('td');
-                    keyCell.textContent = 'cartItems';
-                    const valueCell = document.createElement('td');
-                    valueCell.textContent = JSON.stringify(cartItem);
-                    row.appendChild(keyCell);
-                    row.appendChild(valueCell);
-                    tableBody.appendChild(row);
-                });
-            }
-        }
-
-        // Call the function to populate the table when the page loads
-        window.onload = populateTable;
-    </script> -->
-    <script src = "script.js"></script>
-    <script src = "script2.js"></script>
-</body>
 </html>
+
+

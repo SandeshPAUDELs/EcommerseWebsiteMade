@@ -42,6 +42,12 @@ form .form-outline .form-control{
     width: 100px;
     color: rgb(224, 110, 110);
 }
+.remove-from-cart-button{
+    margin: auto;
+    width: 100px;
+    color: rgb(224, 110, 110);
+
+}
 .text-center label{
     display: block;
     font-size: 20px;
