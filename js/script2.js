@@ -26,8 +26,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
 
-    localStorage.setItem("cart", JSON.stringify(cartItems));
-
+    const cart = localStorage.setItem("cart", JSON.stringify(cartItems));
+//  Here cart is added
     Swal.fire({
       position: 'top-end',
       icon: 'success',
@@ -78,6 +78,7 @@ const PaymentGateway = document.querySelector('input[name="payment Gateway"]:che
 const Data = {Firstname, Lastname, BankName, AccountNumber, PaymentGateway};
 submittedForm.push(Data);
 localStorage.setItem('submittedForm', JSON.stringify(submittedForm));
+// submittedForm is added
 Display();
 indexx ++;
 });
@@ -123,3 +124,36 @@ localStorage.setItem("submittedForm", JSON.stringify(submittedForm));
 main.innerHTML = "";
 Display();
 }
+
+
+
+// Now Retrived Data from keys 
+const StoredCartItems = JSON.parse(localStorage.getItem('cart'));
+const StoredUserData = JSON.parse(localStorage.getItem('submittedForm'));
+ // Now combinf Data into neew object 
+ const CombinedData = {
+  user: StoredCartItems,
+  cart: StoredUserData
+ };
+ // Convert to JSON string
+ const CombinedUserJSONData = JSON.stringify(CombinedData);
+
+ // Create a New key and store Data
+ const NewKey = 'combinedUserDataAndCart';
+ localStorage.setItem(NewKey, CombinedUserJSONData);
+
+// const DisplayUserDataAndCartItems = document.querySelector('.displayCombinedData');
+const CombinedStoredData = localStorage.getItem('combinedUserDataAndCart');
+if(CombinedStoredData) {
+  const parsedCombinedData = JSON.parse(CombinedStoredData);
+  console.log(parsedCombinedData);
+  const DisplayUserDataAndCartItems = document.querySelector('.displayCombinedData');
+  DisplayUserDataAndCartItems.innerHTML = `
+  <h2 class = "text-center">userData and Purchased items</h2>
+  <p>FirstName: ${parsedCombinedData.user.Firstname}</p>
+  <p>LastName: ${parsedCombinedData.user.Lastname}</p>
+  <p>ProductName: ${parsedCombinedData.cart.productName} </p>
+  `;
+
+}
+
