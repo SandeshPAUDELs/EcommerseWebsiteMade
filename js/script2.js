@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', function () {
   const selectedProductDiv = document.getElementById('selected-product');
   let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
@@ -17,17 +16,15 @@ document.addEventListener('DOMContentLoaded', function () {
       })
       return;
     }
-    
     cartItems.push({
       id: productId,
       name: productName,
       image: productImage,
-      price: productPrice
-
+      price: productPrice,
+      // quantity: selectedQuantity
     });
 
     const cart = localStorage.setItem("cart", JSON.stringify(cartItems));
-//  Here cart is added
     Swal.fire({
       position: 'top-end',
       icon: 'success',
@@ -137,33 +134,33 @@ const StoredUserData = JSON.parse(localStorage.getItem('submittedForm'));
  };
  // Convert to JSON string
  const CombinedUserJSONData = JSON.stringify(CombinedData);
-
  // Create a New key and store Data
  const NewKey = 'combinedUserDataAndCart';
  localStorage.setItem(NewKey, CombinedUserJSONData);
 
 const CombinedStoredData = localStorage.getItem('combinedUserDataAndCart');
 if(CombinedStoredData) {
-  
   const DisplayUserDataAndCartItems = document.querySelector('.displayCombinedData');
   DisplayUserDataAndCartItems.innerHTML = `
     <h2 class="text-center">userData and Purchased items</h2>
   `;
-  
+
   if (CombinedStoredData) {
     const parsedCombinedData = JSON.parse(CombinedStoredData);
     // console.log(JSON.stringify(parsedCombinedData));
     for (let i = 0; i < parsedCombinedData.user.length; i++) {
-      const userData = parsedCombinedData.user[i];
+      const userData = parsedCombinedData.user[0];
       const cartItem = parsedCombinedData.cart[i];
-  
+
       DisplayUserDataAndCartItems.innerHTML += `
-        <p>FirstName: ${userData.Firstname}</p>
+      <img style = "width: 50px; height: 50px;" src="${cartItem.image}" alt="Product Image">
+        <p>UserName: ${userData.Firstname}</p>
         <p>LastName: ${userData.Lastname}</p>
-        <p>ProductName: ${cartItem.productName}</p>
+        <p>PaymentGateway: ${userData.PaymentGateway}</p>
+        <p>ProductName: ${cartItem.name}</p>
+        <p>No.of items: ${cartItem.price}</p>        
       `;
     }
   }
-  
-
 }
+
