@@ -76,7 +76,7 @@ submittedForm.push(Data);
 localStorage.setItem('submittedForm', JSON.stringify(submittedForm));
 // submittedForm is added
 Display();
-indexx ++;
+// indexx ++;
 });
 
 // This is function to display the Data in main div
@@ -91,7 +91,7 @@ function Display() {
         <th class="text-center">First Name</th>
         <th class="text-center">Last Name</th>
         <th class="text-center">Bank Name</th>
-        <th class="text-center">Purchased Product</th>
+        <th class="text-center">Account Number</th>
         <th class="text-center">Price</th>
         <th class="text-center"></th>
       </tr>
@@ -124,7 +124,7 @@ Display();
 
 
 
-// Now Retrived Data from keys 
+
 const StoredCartItems = JSON.parse(localStorage.getItem('cart'));
 const StoredUserData = JSON.parse(localStorage.getItem('submittedForm'));
  // Now combinf Data into neew object 
@@ -139,28 +139,48 @@ const StoredUserData = JSON.parse(localStorage.getItem('submittedForm'));
  localStorage.setItem(NewKey, CombinedUserJSONData);
 
 const CombinedStoredData = localStorage.getItem('combinedUserDataAndCart');
+
 if(CombinedStoredData) {
+
+  // This is added for
+  const parsedCombinedData = JSON.parse(CombinedStoredData);
+  let totalPrice = 0;
+
+
   const DisplayUserDataAndCartItems = document.querySelector('.displayCombinedData');
   DisplayUserDataAndCartItems.innerHTML = `
-    <h2 class="text-center">userData and Purchased items</h2>
+  <div class = 'stordData'>
+  <p class = "text-center">ProductImage</p>
+  <p>FirstName</p>
+  <p>LastName</p>
+  <p>Paymenthrough</p>
+  <p>ProductName</p>
+  <p class = "text-center">Price</p>
+  </div>
+  <hr>
   `;
 
   if (CombinedStoredData) {
     const parsedCombinedData = JSON.parse(CombinedStoredData);
     // console.log(JSON.stringify(parsedCombinedData));
-    for (let i = 0; i < parsedCombinedData.user.length; i++) {
+    for (let i = 0; i < parsedCombinedData.cart.length; i++) {
       const userData = parsedCombinedData.user[0];
       const cartItem = parsedCombinedData.cart[i];
 
       DisplayUserDataAndCartItems.innerHTML += `
-      <img style = "width: 50px; height: 50px;" src="${cartItem.image}" alt="Product Image">
-        <p>UserName: ${userData.Firstname}</p>
-        <p>LastName: ${userData.Lastname}</p>
-        <p>PaymentGateway: ${userData.PaymentGateway}</p>
-        <p>ProductName: ${cartItem.name}</p>
-        <p>No.of items: ${cartItem.price}</p>        
+      <div class = 'stordData'>
+      <p class = "text-center"><img class = "product" src="${cartItem.image}" alt="Product Image"></p>
+        <p>${userData.Firstname}</p>
+        <p>${userData.Lastname}</p>
+        <p>${userData.PaymentGateway}</p>
+        <p>${cartItem.name}</p>
+        <p class = "text-center"> Rs ${cartItem.price} /-</p>  
+        </div>
+        <hr>      
       `;
     }
   }
 }
+ 
+
 

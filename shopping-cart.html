@@ -553,7 +553,7 @@ rel="stylesheet"
 })
       return;
     }
-
+    
     cartItems.push({
       id: productId,
       name: productName,
@@ -624,7 +624,7 @@ rel="stylesheet"
       
       multiplyButton1.addEventListener('click', function(){
         const productName = this.dataset.productName;
-        
+
         const priceDisplay = productDiv.querySelector('.cart-item-price');
         if(priceDisplay && product.multiplier >= 2){
           product.multiplier -= 1;

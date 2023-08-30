@@ -76,3 +76,14 @@ table tbody tr td span{
     cursor: pointer;
 }
 
+.stordData{
+    display: flex;
+}
+.stordData p{
+    width: 200px;
+    border-spacing: 5px;
+}
+.stordData p .product{
+    width: 50px;
+    height: 50px;
+}

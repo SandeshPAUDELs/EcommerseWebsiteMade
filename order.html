@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CheckOut Page</title>
+    <title>Order Items</title>
     <link rel="stylesheet" href="css/index.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <!-- Font Awesome -->
@@ -132,68 +132,13 @@ rel="stylesheet"
     </div>
     <!-- Container wrapper -->
   </nav>
-  <div class="displayCombinedData"></div>
-  <div id="table-container"></div>
-  <div class="main"></div>  <!--Local Storage Data comes here  -->
   
   
-<form action="">
-<div class="container" id = "paymentform_control">
-  <div style = "margin-top: 15px;" class="row mb-4">
-    <div class="col">
-      <div class="form-outline">
-        <input type="text" id="form6Example1" class="form-control" required />
-        <label class="form-label" for="form6Example1" name = "firstName">First name</label>
-      </div>
-    </div>
-    <div class="col">
-      <div class="form-outline">
-        <input type="text" id="form6Example2" class="form-control" required />
-        <label class="form-label" for="form6Example2" name = "lastName">Last name</label>
-      </div>
-    </div>
-  </div>
-
-  <!-- Text input -->
-  <div class="form-outline mb-4">
-    <input type="text" id="form6Example3" class="form-control" required/>
-    <label class="form-label" for="form6Example3" name = "bankName">Bank name</label>
-  </div>
-  <!-- Text input -->
-  <div class="form-outline mb-4">
-    <input type="number" id="form6Example4" class="form-control" required/>
-    <label class="form-label" for="form6Example4" name = "accountNumber">Account Number</label>
-  </div>
-  <div class="form-outline mb-4 text-center">
-    <label class="form-label text-muted" for="form6Example5">Select Your Payment Gateway</label>
-    <input type="radio" name = "payment Gateway" id = "eSewaRadio" value = "E-Sewa">
-    <label class="form-label" for="E-sewa">E-sewa</label>
-    <input type="radio" name = "payment Gateway" id = "KhaltiRadio" value = "Khalti">
-    <label class="form-outline" for="Khalti">Khalti</label>
-  </div>
-  <div class="form-outline mb-4">
-    <a href="order.html"><button type="submit" class="btn btn-primary btn-block mb-4" onclick = "submit()">Submit</button>
-    </a>
-  </div>
-  </div>
-  </form>
-
+  
   
 
-  <!-- Footer -->
-  <script>
-    function submit(){
-      Swal.fire({
-      position: 'top-end',
-      icon: 'success',
-      title: 'Payment Success',
-      showConfirmButton: false,
-      timer: 1000
-    })
-    }
-  </script>
-<script src = "js/script.js"></script>
-<script src="js/script2.js"></script>
+  <script src = "js/script2.js"></script>
+    <script src = "js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <!-- MDB -->
 <script
