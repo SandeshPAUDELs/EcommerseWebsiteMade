@@ -74,7 +74,6 @@ const Lastname = document.getElementById('form6Example2').value;
 const BankName = document.getElementById('form6Example3').value;
 const AccountNumber = document.getElementById('form6Example4').value;
 const PaymentGateway = document.querySelector('input[name="payment Gateway"]:checked').value;
-
 const Data = {Firstname, Lastname, BankName, AccountNumber, PaymentGateway};
 submittedForm.push(Data);
 localStorage.setItem('submittedForm', JSON.stringify(submittedForm));
@@ -127,13 +126,14 @@ Display();
 
 
 
+
 // Now Retrived Data from keys 
 const StoredCartItems = JSON.parse(localStorage.getItem('cart'));
 const StoredUserData = JSON.parse(localStorage.getItem('submittedForm'));
  // Now combinf Data into neew object 
  const CombinedData = {
-  user: StoredCartItems,
-  cart: StoredUserData
+  cart: StoredCartItems,
+  user: StoredUserData
  };
  // Convert to JSON string
  const CombinedUserJSONData = JSON.stringify(CombinedData);
@@ -142,18 +142,28 @@ const StoredUserData = JSON.parse(localStorage.getItem('submittedForm'));
  const NewKey = 'combinedUserDataAndCart';
  localStorage.setItem(NewKey, CombinedUserJSONData);
 
-// const DisplayUserDataAndCartItems = document.querySelector('.displayCombinedData');
 const CombinedStoredData = localStorage.getItem('combinedUserDataAndCart');
 if(CombinedStoredData) {
-  const parsedCombinedData = JSON.parse(CombinedStoredData);
-  console.log(parsedCombinedData);
+  
   const DisplayUserDataAndCartItems = document.querySelector('.displayCombinedData');
   DisplayUserDataAndCartItems.innerHTML = `
-  <h2 class = "text-center">userData and Purchased items</h2>
-  <p>FirstName: ${parsedCombinedData.user.Firstname}</p>
-  <p>LastName: ${parsedCombinedData.user.Lastname}</p>
-  <p>ProductName: ${parsedCombinedData.cart.productName} </p>
+    <h2 class="text-center">userData and Purchased items</h2>
   `;
+  
+  if (CombinedStoredData) {
+    const parsedCombinedData = JSON.parse(CombinedStoredData);
+    // console.log(JSON.stringify(parsedCombinedData));
+    for (let i = 0; i < parsedCombinedData.user.length; i++) {
+      const userData = parsedCombinedData.user[i];
+      const cartItem = parsedCombinedData.cart[i];
+  
+      DisplayUserDataAndCartItems.innerHTML += `
+        <p>FirstName: ${userData.Firstname}</p>
+        <p>LastName: ${userData.Lastname}</p>
+        <p>ProductName: ${cartItem.productName}</p>
+      `;
+    }
+  }
+  
 
 }
-
