@@ -184,3 +184,45 @@ if(CombinedStoredData) {
  
 
 
+
+// Now for checkOut.html
+/*
+const CheckOutForm = document.querySelector('form-control');
+let checkOutSubmit = [];
+if(localStorage.getItem("checkOutSubmit")){
+  checkOutSubmit = JSON.parse(localStorage.getItem('checkOutSubmit'));
+}
+CheckOutForm.addEventListener("submit", function(event){
+  event.preventDefault();
+  const FirstName2 = document.getElementById("typeText").value;
+  const LastName2 = document.getElementById('typeText').value;
+  const PhoneNO = document.getElementById('typePhone').value;
+  const userEmail = document.getElementById('typeEmail').value;
+  const userAddress = document.getElementById('typeText').value;
+  const UserHouse = document.getElementById('typeText').value;
+  const PostalCode = document.getElementById('typeText').value;
+  const Zip = document.getElementById('typeText').value;
+  
+
+}) */
+
+function CheckOutContinue(){
+  const FirstName2 = document.getElementById("typeText").value;
+  const LastName2 = document.getElementById('typeText').value;
+  const PhoneNO = document.getElementById('typePhone').value;
+  const userEmail = document.getElementById('typeEmail').value;
+  const userAddress = document.getElementById('typeText').value;
+  const UserHouse = document.getElementById('typeText').value;
+  const PostalCode = document.getElementById('typeText').value;
+  const Zip = document.getElementById('typeText').value;
+  const Checkbox = document.getElementById('flexCheckDefault').checked?document.getElementById('flexCheckDefault').value:'';
+  const RadioButton = document.querySelector('input[name="flexRadioDefault"]:checked').value;
+  const CitytoPick = document.querySelector('.form-select').value;
+  const TextArea = document.getElementById('textAreaExample1').value;
+
+  let checkoutForm = {FirstName2, LastName2, PhoneNO, userEmail, userAddress, UserHouse, PostalCode, Zip, Checkbox, RadioButton, CitytoPick, TextArea};
+  console.log(checkoutForm);
+  localStorage.setItem('checkOutData', JSON.stringify(checkoutForm));
+
+}
+
