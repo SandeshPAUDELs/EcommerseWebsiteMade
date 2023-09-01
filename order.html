@@ -137,8 +137,9 @@ rel="stylesheet"
   <h2 class = "container text-center text-muted">Person Order Details come here</h2>
   
  <div id="displayCheckout"></div>
-
+<!---->
 <script>
+
   // Retrieve the checkout data from local storage
   const storedCheckoutData = JSON.parse(localStorage.getItem('checkOutData'));
   if(storedCheckoutData){
@@ -158,28 +159,23 @@ rel="stylesheet"
         <td>${storedCheckoutData.PhoneNO}</td>
         <td>${storedCheckoutData.userEmail}</td>
         <td>${storedCheckoutData.userAddress}</td>
-        <td><div class="dropdown" id="dropdownContainer">
-          <a class="btn btn-secondary text-danger dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Pending
-  </a>
+        <td>
+          <select name="Status" id="">
+  <option style = "color: red;" value="1">Pending</option>
+  <option value="2">Awating payment</option>
+  <option value="3">Awating Shiping</option>
+  <option value="4">Awating Fulfilment</option>
+  <option value="5">Cancelled</option>
+  <option value="6">Declined</option>
+  <option value="7" disabled>Refunded</option>
+  <option value="8">Manual Verification Required</option>
+  <option value="9">Partially Refunded</option>
 
-  <ul class="dropdown-menu" id="myDropdown">
-    <li><a class="dropdown-item" href="#">Pending</a></li>
-    <li><a class="dropdown-item" href="#">Awating Payment</a></li>
-    <li><a class="dropdown-item" href="#">Awating Shipment</a></li>
-    <li><a class="dropdown-item" href="#">Awating Fulfilment</a></li>
-    <li><a class="dropdown-item" href="#">Cancelled</a></li>
-    <li><a class="dropdown-item" href="#">Declined</a></li>
-    <li><a class="dropdown-item" href="#">Refunded</a></li>
-    <li><a class="dropdown-item" href="#">Manual Verification Required</a></li>
-    <li><a class="dropdown-item" href="#">Partially Refunded</a></li>
-  </ul>
-</div>
+</select>
 </td>
           </tr>
       `;
 }
-  
 </script>
 
 
@@ -194,4 +190,5 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"
 ></script>
 </body>
 </html>
+
 

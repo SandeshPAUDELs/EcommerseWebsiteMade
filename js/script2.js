@@ -205,7 +205,3 @@ function CheckOutContinue(){
 } 
 
 
-// Now the dropdown code to make the items present in dropdown button to go upper when user clicks in that button
-document.querySelector("td").addEventListener("click", function () {
-  document.querySelector("#myDropdown").classList.toggle("show");
-});
