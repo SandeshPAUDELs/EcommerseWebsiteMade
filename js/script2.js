@@ -44,6 +44,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const productPrice = productDiv.querySelector('.card-title').textContent;
       
       updateCart(productName, productImage, productPrice, productId);
+      CheckOutContinue(productImage); // Pass the product image to the function
+
     });
   });
 });
@@ -139,14 +141,10 @@ const StoredUserData = JSON.parse(localStorage.getItem('submittedForm'));
  localStorage.setItem(NewKey, CombinedUserJSONData);
 
 const CombinedStoredData = localStorage.getItem('combinedUserDataAndCart');
-
 if(CombinedStoredData) {
-
   // This is added for
   const parsedCombinedData = JSON.parse(CombinedStoredData);
   let totalPrice = 0;
-
-
   const DisplayUserDataAndCartItems = document.querySelector('.displayCombinedData');
   DisplayUserDataAndCartItems.innerHTML = `
   <div class = 'stordData'>
@@ -201,21 +199,13 @@ function CheckOutContinue(){
   const CitytoPick = document.querySelector('.form-select').value;
   const TextArea = document.getElementById('textAreaExample1').value;
 
+
   let checkoutForm = {FirstName2, LastName2, PhoneNO, userEmail, userAddress, UserHouse, PostalCode, Zip, Checkbox, RadioButton, CitytoPick, TextArea};
   localStorage.setItem('checkOutData', JSON.stringify(checkoutForm));
-
-}
- // Now this code is to display the order data
-
- const StoredCheckoutData = JSON.parse(localStorage.getItem('checkOutData'));
- const CombinedData2 = {
-  cart: StoredCartItems,
-  checkout: StoredCheckoutData
- };
- const CombindedUserJSONData2 = JSON.stringify(Data2);
- const SecondKey = 'CheckoutDataAndCart';
- localStorage.setItem(SecondKey, CombindedUserJSONData2);
- const CombinedStoredData2 = localStorage.getItem('CheckoutDataAndCart');
+} 
 
 
- 
+// Now the dropdown code to make the items present in dropdown button to go upper when user clicks in that button
+document.querySelector("td").addEventListener("click", function () {
+  document.querySelector("#myDropdown").classList.toggle("show");
+});

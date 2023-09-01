@@ -87,3 +87,11 @@ table tbody tr td span{
     width: 50px;
     height: 50px;
 }
+#displayCheckout table tr{
+    border: none;
+}
+#displayCheckout table tr th,td{
+    border: none;
+    text-align: center;
+    width: 200px;
+}

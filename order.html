@@ -134,10 +134,56 @@ rel="stylesheet"
   </nav>
   
   
-  <h2 class = "container text-center text-muted">Your Ordered Items comes here</h2>
+  <h2 class = "container text-center text-muted">Person Order Details come here</h2>
+  
  <div id="displayCheckout"></div>
- 
 
+<script>
+  // Retrieve the checkout data from local storage
+  const storedCheckoutData = JSON.parse(localStorage.getItem('checkOutData'));
+  if(storedCheckoutData){
+    document.getElementById('displayCheckout').innerHTML = `
+    <table>
+    <tr>
+      <th>FirstName</th>
+      <th>lastName</th>
+      <th>PhoneNo.</th>
+      <th>Email</th>
+      <th>Address</th>
+      <th>Delivery Status</th>
+      </tr>
+      <tr>
+       <td>${storedCheckoutData.FirstName2}</td>
+        <td>${storedCheckoutData.LastName2}</td>
+        <td>${storedCheckoutData.PhoneNO}</td>
+        <td>${storedCheckoutData.userEmail}</td>
+        <td>${storedCheckoutData.userAddress}</td>
+        <td><div class="dropdown" id="dropdownContainer">
+          <a class="btn btn-secondary text-danger dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Pending
+  </a>
+
+  <ul class="dropdown-menu" id="myDropdown">
+    <li><a class="dropdown-item" href="#">Pending</a></li>
+    <li><a class="dropdown-item" href="#">Awating Payment</a></li>
+    <li><a class="dropdown-item" href="#">Awating Shipment</a></li>
+    <li><a class="dropdown-item" href="#">Awating Fulfilment</a></li>
+    <li><a class="dropdown-item" href="#">Cancelled</a></li>
+    <li><a class="dropdown-item" href="#">Declined</a></li>
+    <li><a class="dropdown-item" href="#">Refunded</a></li>
+    <li><a class="dropdown-item" href="#">Manual Verification Required</a></li>
+    <li><a class="dropdown-item" href="#">Partially Refunded</a></li>
+  </ul>
+</div>
+</td>
+          </tr>
+      `;
+}
+  
+</script>
+
+
+</script>
   <script src = "js/script2.js"></script>
     <script src = "js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
@@ -148,3 +194,4 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"
 ></script>
 </body>
 </html>
+
