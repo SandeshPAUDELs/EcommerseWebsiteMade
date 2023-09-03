@@ -137,47 +137,55 @@ rel="stylesheet"
   <h2 class = "container text-center text-muted">Person Order Details come here</h2>
   
  <div id="displayCheckout"></div>
-<!---->
-<script>
 
-  // Retrieve the checkout data from local storage
+<script>
   const storedCheckoutData = JSON.parse(localStorage.getItem('checkOutData'));
-  if(storedCheckoutData){
-    document.getElementById('displayCheckout').innerHTML = `
+
+if (storedCheckoutData) {
+  let tableHtml = `
     <table>
-    <tr>
-      <th>FirstName</th>
-      <th>lastName</th>
-      <th>PhoneNo.</th>
-      <th>Email</th>
-      <th>Address</th>
-      <th>Delivery Status</th>
-      </tr>
       <tr>
-       <td>${storedCheckoutData.FirstName2}</td>
-        <td>${storedCheckoutData.LastName2}</td>
-        <td>${storedCheckoutData.PhoneNO}</td>
-        <td>${storedCheckoutData.userEmail}</td>
-        <td>${storedCheckoutData.userAddress}</td>
+        <th>FirstName</th>
+        <th>lastName</th>
+        <th>PhoneNo.</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Delivery Status</th>
+      </tr>
+  `;
+
+  // Loop through the stored data and add rows to the table
+  for (const data of storedCheckoutData) {
+    tableHtml += `
+      <tr>
+        <td>${data.FirstName2}</td>
+        <td>${data.LastName2}</td>
+        <td>${data.PhoneNO}</td>
+        <td>${data.userEmail}</td>
+        <td>${data.userAddress}</td>
         <td>
           <select name="Status" id="">
-  <option style = "color: red;" value="1">Pending</option>
-  <option value="2">Awating payment</option>
-  <option value="3">Awating Shiping</option>
-  <option value="4">Awating Fulfilment</option>
-  <option value="5">Cancelled</option>
-  <option value="6">Declined</option>
-  <option value="7" disabled>Refunded</option>
-  <option value="8">Manual Verification Required</option>
-  <option value="9">Partially Refunded</option>
+            <option style="color: red;" value="1">Pending</option>
+            <option value="2">Awating payment</option>
+            <option value="3">Awating Shipping</option>
+            <option value="4">Awating Fulfilment</option>
+            <option value="5">Cancelled</option>
+            <option value="6">Declined</option>
+            <option value="7" disabled>Refunded</option>
+            <option value="8">Manual Verification Required</option>
+            <option value="9">Partially Refunded</option>
+          </select>
+        </td>
+      </tr>
+    `;
+  }
 
-</select>
-</td>
-          </tr>
-      `;
-}
+  // Set the HTML content of the displayCheckout element
+  document.getElementById('displayCheckout').innerHTML = tableHtml;
+  tableHtml += `</table>`;
+
+} 
 </script>
-
 
 </script>
   <script src = "js/script2.js"></script>

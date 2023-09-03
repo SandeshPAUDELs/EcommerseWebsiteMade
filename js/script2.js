@@ -43,18 +43,13 @@ document.addEventListener('DOMContentLoaded', function () {
       const productImage = productDiv.querySelector('.card-img-top').getAttribute('src');
       const productPrice = productDiv.querySelector('.card-title').textContent;
       
-      updateCart(productName, productImage, productPrice, productId);
-      CheckOutContinue(productImage); // Pass the product image to the function
+      updateCart(productName, productImage, productPrice, productId) // Pass the product image to the function
 
     });
   });
 });
 
   
-
-
-
-
 
 
 // This  code is for payment form 
@@ -184,7 +179,6 @@ if(CombinedStoredData) {
 
 
 // Now for checkOut.html
-
 function CheckOutContinue(){
   const FirstName2 = document.getElementById("typeText").value;
   const LastName2 = document.getElementById('typeText2').value;
@@ -199,9 +193,19 @@ function CheckOutContinue(){
   const CitytoPick = document.querySelector('.form-select').value;
   const TextArea = document.getElementById('textAreaExample1').value;
 
-
   let checkoutForm = {FirstName2, LastName2, PhoneNO, userEmail, userAddress, UserHouse, PostalCode, Zip, Checkbox, RadioButton, CitytoPick, TextArea};
-  localStorage.setItem('checkOutData', JSON.stringify(checkoutForm));
-} 
+  // localStorage.setItem('checkOutData', JSON.stringify(checkoutForm));
+
+
+
+  // Check if there is already data in local storage
+  let checkoutData = JSON.parse(localStorage.getItem('checkOutData')) || [];
+
+  // Add the current set of data to the array
+  checkoutData.push(checkoutForm);
+
+  // Store the updated array back in local storage
+  localStorage.setItem('checkOutData', JSON.stringify(checkoutData));
+}
 
 
