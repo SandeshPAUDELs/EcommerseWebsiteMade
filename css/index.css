@@ -95,3 +95,7 @@ table tbody tr td span{
     text-align: center;
     width: 200px;
 }
+#productsForYou{
+    display: flex;
+    flex-wrap: wrap;
+}
