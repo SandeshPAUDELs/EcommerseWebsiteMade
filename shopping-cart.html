@@ -173,6 +173,10 @@ rel="stylesheet"
     </div>
   </div></div>
 
+  <div id="CartItemsApi"></div>
+  <!-- Cart Itemd from etch Api are displayed -->
+
+
 <section class="bg-light my-5">
   <!-- Added to cart Items are displayed Here -->
 <div class="container">
@@ -676,35 +680,8 @@ rel="stylesheet"
 
 
 
-
-
-fetch('https://dummyjson.com/products/1')
-            .then(response => response.json())
-            .then(data => {
-                // Access the data and display it in a table
-                const productDetailsTable = document.getElementById('product-details');
-                productDetailsTable.innerHTML = `
-                    <tr>
-                        <td>Product ID</td>
-                        <td>${data.id}</td>
-                    </tr>
-                    <tr>
-                        <td>Product Name</td>
-                        <td>${data.description}</td>
-                    </tr>
-                    <tr>
-                        <td>Product Price</td>
-                        <td>${data.price}</td>
-                    </tr>
-                `;
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
-
   </script>
- 
-
+  <script src = "js/script.js"></script>
     <script src = "js/script2.js"></script>
     <script src = "js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
