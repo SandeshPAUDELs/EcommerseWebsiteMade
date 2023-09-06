@@ -77,6 +77,48 @@ detailsButtons.forEach(button => {
 });
 
 
+// Now this is the code to display the details of products in productDetails.html page
+function getUrlParameter(name) {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(name);
+}
+
+const productId = getUrlParameter('id');
+
+fetch(`https://dummyjson.com/products/${productId}`)
+  .then(res => res.json())
+  .then(productDetails => {
+    const productDisplay = document.getElementById('product-Details');
+    if (productDetails) {
+      productDisplay.innerHTML = `
+        <div class="container">
+        <div class="row">
+          <div class="col-md">
+          <img src="${productDetails.thumbnail}" alt="${productDetails.title}" style="max-width: 100%; height: auto;">
+          </div>
+          <div class="col-md">
+            <h3>${productDetails.title}</h3>
+                <br>
+                <p>${productDetails.category}</p>
+                <p>Here need to add Reviews</p>
+                <br><br>
+                <p style = "text-decoration: bold; font-size: 20px;">Rs${productDetails.price.toFixed(2)} <span style = "font-size: 15px;">/piece</span></p>
+                <p>${productDetails.description}</p>
+          <hr>
+          <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="btn-group" role="group" aria-label="Third group">
+              <button type="button" class="btn btn-success"><a style = "text-decoration: none; color: white;"  href = "productsForyou.html">Go Back</a></button>
+            </div>
+          </div>
+            
+            </div>
+          
+        </div>
+      </div>
+      `;
+    }
+  })
+
 
 
 
