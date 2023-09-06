@@ -1,3 +1,4 @@
+
 function fetchDataAndDisplay(url, displayFunction) {
   fetch(url)
       .then(res => res.json())
@@ -53,7 +54,10 @@ function displayCategories(data) {
 
       categories.forEach(category => {
           const categoryItem = document.createElement('li');
-          categoryItem.textContent = category;
+          categoryItem.style.listStyle = "none";
+          // categoryItem.textContent = category;
+          categoryItem.innerHTML = "<button class='ml-auto  m-1 btn-lg category-names btn btn-outline-secondary'>" + category + "</button>";
+
           categoryList.appendChild(categoryItem);
       });
 
@@ -64,7 +68,68 @@ fetchDataAndDisplay('https://dummyjson.com/products', displayProducts);
 fetchDataAndDisplay('https://dummyjson.com/products/categories', displayCategories);
 
 
-// Add an event listener for the "Details" buttons
+
+
+
+// Function to display products in the selected category
+function displayProductsByCategory(category) {
+  // Fetch all products using the API (you should adapt this to your API)
+  fetch('https://dummyjson.com/products')
+    .then(res => res.json())
+    .then(data => {
+      const filteredProductList = document.getElementById('filtered-product-list');
+      filteredProductList.innerHTML = ''; // Clear previous content
+
+      if (Array.isArray(data.products)) {
+        const filteredProducts = data.products.filter(product =>
+          category === '' || product.category === category
+        );
+
+        if (filteredProducts.length === 0) {
+          filteredProductList.textContent = 'No products found for the selected category.';
+        } else {
+          filteredProducts.forEach(product => {
+            // Create a product card element
+            const productCard = document.createElement('div');
+            productCard.classList.add('card', 'h-100');
+            productCard.innerHTML = `
+              <img src="${product.thumbnail}" class="card-img-top" alt="${product.title}">
+              <div class="card-body">
+                <h5 class="card-title">${product.title}</h5>
+                <p class="card-text">${product.category}</p>
+                <p class="card-text">Product Id: ${product.id}</p>
+                <p>Rs${product.price.toFixed(2)}</p>
+              </div>
+              <div class="card-footer">
+                <button class="btn btn-primary details-button">
+                  <a href="productDetails.html?id=${product.id}" style="text-decoration: none; color: white;">Details</a>
+                </button>
+                <button class="btn add-to-cart-button" data-type="product" data-product-id="${product.id}" onclick="addToCart(this)">Add to cart</button>
+              </div>
+            `;
+
+            // Append the product card to the list
+            filteredProductList.appendChild(productCard);
+          });
+        }
+      } else {
+        filteredProductList.textContent = 'Error fetching products.';
+      }
+    })
+    .catch(error => console.error('Error fetching products:', error));
+}
+
+// Add event listener for the category selection
+const categorySelect = document.getElementById('categorySelect');
+categorySelect.addEventListener('change', function () {
+  const selectedCategory = categorySelect.value;
+  displayProductsByCategory(selectedCategory);
+});
+
+
+
+
+// // Add an event listener for the "Details" buttons
 const detailsButtons = document.querySelectorAll('.details-button');
 
 detailsButtons.forEach(button => {
@@ -75,6 +140,7 @@ detailsButtons.forEach(button => {
     window.location.href = `productDetails.html?id=${productId}`;
   });
 });
+
 
 
 // Now this is the code to display the details of products in productDetails.html page
@@ -213,4 +279,3 @@ function removeFromCart(event) {
 
 
 displayCart();
-

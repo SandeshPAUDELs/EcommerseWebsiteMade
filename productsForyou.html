@@ -137,25 +137,39 @@ rel="stylesheet"
    
     <div class="row">
       <!-- sidebar -->
-      <div class="col-lg-3">
-        <form class="d-flex input-group w-auto" id="searchForm">
-          <input
-              type="search"
-              class="form-control"
-              placeholder="Search for the Products"
-              aria-label="Search"
-              id="searchInput"
-          />
-          <button
-              class="btn btn-outline-primary bg-secondary"
-              type="submit"
-              data-mdb-ripple-color="dark">
-              <i class="fa fa-search" aria-hidden="true"></i>
-          </button>
-      </form>
+      <div class="col-lg-3">     
+        <p>Search for the products</p>
+
+
+        <!-- Category Selection -->
+<select id="categorySelect" class = "form-control">
+  <option value="">Select a category</option>
+  <option value="smartphones">Smartphones</option>
+  <option value="laptops">Laptops</option>
+  <option value="skincare">Skincare</option>
+  <option value="fragrances">Fragrances</option>
+        <option value="groceries">Groceries</option>
+        <option value="home-decoration">Home Decoration</option>
+        <option value="furniture">Furniture</option>
+        <option value="tops">Tops</option>
+        <option value="womens-dresses">Women's Dresses</option>
+        <option value="womens-shoes">Women's Shoes</option>
+        <option value="mens-shirts">Men's Shirts</option>
+        <option value="mens-shoes">Men's Shoes</option>
+        <option value="mens-watches">Men's Watches</option>
+        <option value="womens-watches">Women's Watches</option>
+        <option value="womens-bags">Women's Bags</option>
+        <option value="womens-jewellery">Women's Jewellery</option>
+        <option value="sunglasses">Sunglasses</option>
+        <option value="automotive">Automotive</option>
+        <option value="motorcycle">Motorcycle</option>
+        <option value="lighting">Lighting</option>
+</select>
+
+
         <div id = "DisplayProductCategories"></div>
         <!-- This is the code for Product Display Category -->
-       
+
         <!-- Toggle button -->
         <form class="d-flex input-group w-auto">
           <input
@@ -222,8 +236,8 @@ rel="stylesheet"
       <!-- sidebar -->
       <!-- content -->
       <div class="col-lg-9">
-        <!-- <div id="searchResults"></div>   -->
-        <!-- Here the search result is displayed fetched form API -->
+        <!-- Display filtered products -->
+          <div id="filtered-product-list"></div>
 
                  <div class="row">
                   <div class="col-md-12">
@@ -231,6 +245,7 @@ rel="stylesheet"
                   </div>
                  </div>
                   <!-- Here i have used to concept of fetch API-->
+
         <div class="row">
           <div class="col-lg-4 col-md-6 col-sm-6 d-flex">
             <div class="card w-100 my-2 shadow-2-strong">
