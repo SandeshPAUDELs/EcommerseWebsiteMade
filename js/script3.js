@@ -30,9 +30,12 @@ function displayProducts(data) {
                       <p>Rs${product.price.toFixed(2)}</p>
                   </div>
                   <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto justify-content-between">
-                      <a href="productDetails3.html" class="btn btn-primary">Details</a>
-                      <button class="btn add-to-cart-button" data-type="product" data-product-id="${product.id}" onclick="addToCart(this)">Add to cart</button>
-
+                  <button class="btn btn-primary details-button" data-product-id="${product.id}">
+                  <a href="productDetails.html?id=${product.id}" style="text-decoration: none; color: white;">
+                    Details
+                  </a>
+                </button>
+                 <button class="btn add-to-cart-button" data-type="product" data-product-id="${product.id}" onclick="addToCart(this)">Add to cart</button>
                   </div>
               </div>
           `;
@@ -57,14 +60,32 @@ function displayCategories(data) {
       displayProductCategories.appendChild(categoryList);
   }
 }
-
-// Fetch and display products
 fetchDataAndDisplay('https://dummyjson.com/products', displayProducts);
-
-// Fetch and display categories
 fetchDataAndDisplay('https://dummyjson.com/products/categories', displayCategories);
 
 
+// Add an event listener for the "Details" buttons
+const detailsButtons = document.querySelectorAll('.details-button');
+
+detailsButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const productId = button.getAttribute('data-product-id');
+    
+    // Redirect to the product details page with the product ID as a parameter
+    window.location.href = `productDetails.html?id=${productId}`;
+  });
+});
+
+
+
+
+
+
+
+
+
+
+  
 // Now these are the code for add to cart logic
 const addedItems = [];
 function addToCart(button) {
@@ -97,9 +118,9 @@ function addToCart(button) {
     text: 'The item has been added to your cart.',
     icon: 'success'
   });
-
-  displayCart(); // Update the cart display
+  displayCart();
 }
+
 
 // Function to display cart contents in another HTML file
 function displayCart() {
@@ -113,10 +134,22 @@ function displayCart() {
       cartDisplay.textContent = 'Your cart is empty.';
     } else {
       apicart.forEach(item => {
-        const product = getProductById(item.productId);
+        const product = getProductById(item.productId); 
+        // this function is implement to fetch product details by ID
+
         if (product) {
           const cartItem = document.createElement('div');
-          cartItem.textContent = `${product.title} (Quantity: ${item.quantity})`;
+          cartItem.classList.add('cart-item');
+          cartItem.innerHTML = `
+            <span>${product.title}</span>
+            <span>Quantity: ${item.quantity}</span>
+            <button class="remove-button" data-product-id="${item.productId}">Remove</button>
+          `;
+
+          // Add a click event listener to the remove button
+          const removeButton = cartItem.querySelector('.remove-button');
+          removeButton.addEventListener('click', removeFromCart);
+
           cartDisplay.appendChild(cartItem);
         }
       });
@@ -124,4 +157,18 @@ function displayCart() {
   }
 }
 
+// Function to remove an item from the cart
+function removeFromCart(event) {
+  const productId = event.target.getAttribute('data-product-id');
+  const apicart = JSON.parse(localStorage.getItem('apicart')) || [];
+
+  // Find and remove the item from the cart
+  const updatedCart = apicart.filter(item => item.productId !== productId);
+
+  localStorage.setItem('apicart', JSON.stringify(updatedCart));
+  displayCart(); // Update the cart display
+}
+
+
 displayCart();
+
