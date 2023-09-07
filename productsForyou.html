@@ -102,58 +102,22 @@
       <div class="row">
         <!-- sidebar -->
         <div class="col-lg-3">
-          <button id="categorySelect" class="form-control">Select the category</button>
+          <button id="categorySelect" class="form-control m-2 ">Select the category</button>
 
           <div id="DisplayProductCategories"></div>
-          <!-- This is the code for Product Display Category -->
-
-          <!-- Toggle button -->
-          <form class="d-flex input-group w-auto">
-            <input type="search" class="form-control" placeholder="Search for the Products" aria-label="Search" />
-            <button class="btn btn-outline-primary bg-secondary" type="button" data-mdb-ripple-color="dark">
-              <i class="fa fa-search" aria-hidden="true"></i>
-            </button>
-          </form>
-          <button class="btn btn-outline-secondary mb-3 w-100 d-lg-none" type="button" data-mdb-toggle="collapse"
-            data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span>Show filter</span>
-          </button>
-          <!-- Collapsible wrapper -->
-          <div class="collapse card d-lg-block mb-5" id="navbarSupportedContent">
-            <div class="accordion" id="accordionPanelsStayOpenExample">
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="headingOne">
-                  <button class="accordion-button text-dark bg-light" type="button" data-mdb-toggle="collapse"
-                    data-mdb-target="#panelsStayOpen-collapseOne" aria-expanded="true"
-                    aria-controls="panelsStayOpen-collapseOne">
-                    Related items
-                  </button>
-                </h2>
-                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
-                  aria-labelledby="headingOne">
-                  <div class="accordion-body">
-                    <ul class="list-unstyled">
-                      <li><a href="#" class="text-dark">Electronics </a></li>
-                      <li><a href="#" class="text-dark">Home items </a></li>
-                      <li><a href="#" class="text-dark">Books, Magazines </a></li>
-                      <li><a href="#" class="text-dark">Men's clothing </a></li>
-                      <li><a href="#" class="text-dark">Interiors items </a></li>
-                      <li><a href="#" class="text-dark">Underwears </a></li>
-                      <li><a href="#" class="text-dark">Shoes for men </a></li>
-                      <li><a href="#" class="text-dark">Accessories </a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        
         </div>
         <!-- sidebar -->
         <!-- content -->
         <div class="col-lg-9">
 
           <div class="row">
+            <form class="d-flex input-group w-auto" method="GET">
+              <input id="search" type="search" class="form-control" placeholder="Search for the Products" aria-label="Search" name="search" />
+              <button class="btn btn-outline-primary bg-secondary" type="submit" data-mdb-ripple-color="dark" >
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </button>
+            </form>
             <!-- Display filtered products -->
             <div id="filtered-product-list"></div>
 
@@ -299,52 +263,3 @@
 </body>
 
 </html>
-
-<!-- 
-<script>
-  function displayProductsByCategory(category) {
-  fetch('https://dummyjson.com/products')
-    .then(res => res.json())
-    .then(data => {
-      const filteredProductList = document.getElementById('filtered-product-list');
-      filteredProductList.innerHTML = ''; // Clear previous content
-
-      if (Array.isArray(data.products)) {
-        const filteredProducts = data.products.filter(product =>
-          category === '' || product.category === category
-        );
-
-        if (filteredProducts.length === 0) {
-          filteredProductList.textContent = 'No products found for the selected category.';
-        } else {
-          filteredProducts.forEach(product => {
-            // Create a product card element
-            const productCard = document.createElement('div');
-            productCard.classList.add('card', 'h-100');
-            productCard.innerHTML = `
-              <img src="${product.thumbnail}" class="card-img-top" alt="${product.title}">
-              <div class="card-body">
-                <h5 class="card-title">${product.title}</h5>
-                <p class="card-text">${product.category}</p>
-                <p class="card-text">Product Id: ${product.id}</p>
-                <p>Rs${product.price.toFixed(2)}</p>
-              </div>
-              <div class="card-footer">
-                <button class="btn btn-primary details-button">
-                  <a href="productDetails.html?id=${product.id}" style="text-decoration: none; color: white;">Details</a>
-                </button>
-                <button class="btn add-to-cart-button" data-type="product" data-product-id="${product.id}" onclick="addToCart(this)">Add to cart</button>
-              </div>
-            `;
-
-            // Append the product card to the list
-            filteredProductList.appendChild(productCard);
-          });
-        }
-      } else {
-        filteredProductList.textContent = 'Error fetching products.';
-      }
-    })
-    .catch(error => console.error('Error fetching products:', error));
-}
-</script> -->

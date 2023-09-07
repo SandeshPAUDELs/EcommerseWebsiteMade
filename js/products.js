@@ -1,4 +1,4 @@
-import {fetchDataAndDisplay} from './utils.js';
+import {fetchDataAndDisplay, getUrlParameter} from './utils.js';
 
 function displayProducts(data) {
   const productDisplayRow = document.getElementById('product-details');
@@ -52,7 +52,14 @@ function displayCategories(data) {
       categories.forEach(category => {
           const categoryItem = document.createElement('li');
           categoryItem.style.listStyle = "none";
-          categoryItem.innerHTML = "<button class='ml-auto  m-1 btn-lg category-names btn btn-outline-secondary'> " + category + "</button>";
+          categoryItem.innerHTML = `
+          <form class="" method="GET">
+          <input  type="hidden" name="category" value="${category}" />
+          <button class="ml-auto  m-1 btn-lg category-names btn btn-outline-secondary" type="submit" data-mdb-ripple-color="dark" >
+            ${category}
+          </button>
+        </form>
+        `;
           categoryList.appendChild(categoryItem);
       });
 
@@ -63,13 +70,21 @@ function displayCategories(data) {
 
 
 $(document).ready(function (){
-  fetchDataAndDisplay('https://dummyjson.com/products', displayProducts);
+  const category = getUrlParameter('category');
+  const search = getUrlParameter('search');
+
+
+  if (category !== null){
+    fetchDataAndDisplay('https://dummyjson.com/products/category/'+category, displayProducts);
+  }
+  else if( search !== null){
+    fetchDataAndDisplay('https://dummyjson.com/products//search?q='+search, displayProducts);
+    document.getElementById('search').value = search;
+  }
+  else{
+    fetchDataAndDisplay('https://dummyjson.com/products', displayProducts);
+  }
   fetchDataAndDisplay('https://dummyjson.com/products/categories', displayCategories);
-  document.getElementsByClassName('category-names').addEventListener('click', function(){
-    console.log(1)
-  })
-  console.log($('.category-names').innerHTML);
-  
 })
 
 

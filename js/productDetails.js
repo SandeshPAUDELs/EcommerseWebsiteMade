@@ -4,9 +4,13 @@ const productId = getUrlParameter('id');
 function displayProductDetails(productDetails){
     var detailsDiv = document.getElementById('product-details')
     var sliderImageString = ``;
+    sliderImageString += `
+      <div class="carousel-item active">
+      <img src="${productDetails.thumbnail}" class="d-block w-100" alt="#"/>
+    </div>`;
     productDetails.images.forEach(image => {
       sliderImageString += `
-      <div class="carousel-item active">
+      <div class="carousel-item ">
       <img src="${image}" class="d-block w-100" alt="#"/>
     </div>
       `;
@@ -59,7 +63,7 @@ function displayProductDetails(productDetails){
         <hr>
         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
           <div class="btn-group" role="group" aria-label="Third group">
-            <button type="button" class="btn btn-success"><a style = "text-decoration: none; color: white;"  href = "productsForyou.html">Go Back</a></button>
+            <a style = "text-decoration: none; color: white;" href = "productsForyou.html"><button type="button" class="btn btn-success">Go Back</button></a>
           </div>
         </div>
           
