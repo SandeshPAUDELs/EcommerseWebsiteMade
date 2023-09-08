@@ -10,44 +10,30 @@
   const loginPasswordInput = document.querySelector('#loginPassword');
   const registerPasswordInput = document.querySelector('#registerPassword');
   const registerRepeatPasswordInput = document.querySelector('#registerRepeatPassword');
+  const passwordError = document.getElementById("passwordError");
 
-  // Function to handle login
-  loginButton.addEventListener('click', (e) => {
-    e.preventDefault();
 
-    const login = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        userName: loginForm.loginName.value,
-        password: loginPasswordInput.value,
-      }),
-    };
-
-    fetch('https://dummyjson.com/auth/login', login)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.error) {
-          alert('Error Password or Username');
-        } else {
-          window.open('index.html', '_self');
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  });
-
-  // Function to handle registration
+  // function to handle registration
   registerButton.addEventListener('click', (e) => {
     e.preventDefault();
-
     // Check if passwords match
     if (registerPasswordInput.value !== registerRepeatPasswordInput.value) {
-      alert('Passwords do not match');
+      // alert('Passwords do not match');
+      Swal.fire({
+        title: 'Your Password Donot match',
+        text: 'This password is incorrect',
+        icon: 'info'
+      });
       return;
+    }
+
+    const isPasswordValid = validatePassword(registerPasswordInput.value);
+
+    if (!isPasswordValid) {
+      passwordError.style.display = "block";
+      return;
+    } else {
+      passwordError.style.display = "none";
     }
 
     const registration = {
@@ -68,9 +54,22 @@
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
-          alert('Registration failed');
+          // alert('Registration failed');
+          
+          Swal.fire({
+            title: 'Registration Failed',
+            text: 'This registration is failed',
+            icon: 'info'
+          });
         } else {
-          alert('Registration successful');
+          // alert('Registration successful');
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Registration Successful',
+            showConfirmButton: false,
+            timer: 1500
+          })
         }
       })
       .catch((err) => {
@@ -78,4 +77,52 @@
       });
   });
 
+  function validatePassword(password) {
+    const passwordRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
+    return passwordRegex.test(password);
+  }
 
+
+  // Function to handle login
+  loginButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (loginPasswordInput.value !== registerPasswordInput.value ){
+      Swal.fire({
+        title: 'Your Password or Email Donot match',
+        text: 'This password is incorrect',
+        icon: 'info'
+      });
+      return;
+    }
+    const login = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization' : //get token from LS which is stored after login.
+      },
+      body: JSON.stringify({
+        userName: loginForm.loginName.value,
+        password: loginPasswordInput.value,
+      }),
+    };
+
+    fetch('https://dummyjson.com/auth/login', login)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          // alert('Error Password or Username');
+          Swal.fire({
+            title: 'Your Password or Email Donot match',
+            text: 'This password or email is incorrect',
+            icon: 'info'
+          });
+        } else {
+          window.open('index.html', '_self');
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  });
+
+  
