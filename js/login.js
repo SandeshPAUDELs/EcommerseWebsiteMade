@@ -10,11 +10,9 @@
   const registerRepeatPasswordInput = document.querySelector('#registerRepeatPassword');
   const passwordError = document.getElementById("passwordError");
 
-
   // function to handle registration
   registerButton.addEventListener('click', (e) => {
     e.preventDefault();
-
     // this is for password validation
     const isPasswordValid = validatePassword(registerPasswordInput.value);
 
@@ -24,6 +22,7 @@
     } else {
       passwordError.style.display = "none";
     }
+    
     // Check if passwords match
     if (registerPasswordInput.value !== registerRepeatPasswordInput.value) {
       // alert('Passwords do not match');
@@ -72,6 +71,15 @@
             showConfirmButton: false,
             timer: 1500
           })
+          // this is to store data in local sotrage 
+          const userData = {
+            userName: registerForm.registerUsername.value,
+            password: registerPasswordInput.value,
+          };
+            let usersData = JSON.parse(localStorage.getItem('usersData')) || [];
+            usersData.push(userData);
+            localStorage.setItem('usersData', JSON.stringify(usersData));
+            
           // if all the condition meets the go to loginRegister.html page
           window.open('loginRegister.html', '_self');
 
@@ -87,10 +95,11 @@
     return passwordRegex.test(password);
   }
 
-
-  // Function to handle login
+  // Function to handle login  
   loginButton.addEventListener('click', (e) => {
     e.preventDefault();
+    const userData = JSON.parse(localStorage.getItem(enteredUsername));
+
     if (loginPasswordInput.value !== registerPasswordInput.value ){
       Swal.fire({
         title: 'Your Password or Email Donot match',
@@ -99,6 +108,8 @@
       });
       return;
     }
+  });
+  
     const login = {
       method: 'POST',
       headers: {
@@ -128,6 +139,6 @@
       .catch((err) => {
         console.error(err);
       });
-  });
+
 
   

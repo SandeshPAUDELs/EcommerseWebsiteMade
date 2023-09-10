@@ -1,56 +1,3 @@
-document.addEventListener('DOMContentLoaded', function () {
-  const selectedProductDiv = document.getElementById('selected-product');
-  let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-
-  function updateCart(productName, productImage, productPrice, productId) {
-    // function updateCart(productName, productImage, productPrice, productId){
-      const existingItem = cartItems.find(item => item.id === productId);
-
-    // const existingItem = cartItems.findIndex(item => item.id === productId);
-    if (existingItem) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Items is already in the cart',
-        footer: '<a href="">Why do I have this issue?</a>'
-      })
-      return;
-    }
-    cartItems.push({
-      id: productId,
-      name: productName,
-      image: productImage,
-      price: productPrice,
-      // quantity: selectedQuantity
-    });
-
-    const cart = localStorage.setItem("cart", JSON.stringify(cartItems));
-    Swal.fire({
-      position: 'top-end',
-      icon: 'success',
-      title: 'Items is added to cart',
-      showConfirmButton: false,
-      timer: 1000
-    })
-  }
-  
-  const addToCartButtons = document.querySelectorAll('.add-to-cart-button');
-  addToCartButtons.forEach(button => {
-    button.addEventListener('click', function () {
-      const productDiv = this.closest('.card');
-      const productId = productDiv.querySelector('.card-text').textContent;
-      const productName = productDiv.querySelector('.card-text').textContent;
-      const productImage = productDiv.querySelector('.card-img-top').getAttribute('src');
-      const productPrice = productDiv.querySelector('.card-title').textContent;
-      
-      updateCart(productName, productImage, productPrice, productId) // Pass the product image to the function
-
-    });
-  });
-});
-
-  
-
 
 // This  code is for payment form 
 const paymentform_control = document.querySelector('form');
@@ -222,90 +169,36 @@ function CheckOutContinue() {
 }
 
 
- 
-  
-// Now these are the code for add to cart logic
-const addedItems = [];
+// funtion to implement add to cart logic 
 function addToCart(button) {
   const productId = button.getAttribute('data-product-id');
-  
-  // Check if the item has already been added
-  if (addedItems.includes(productId)) {
+  const cartData = JSON.parse(localStorage.getItem('cart')) || [];
+
+  const existingItem = cartData.find(item => item.productId === productId);
+
+  if (existingItem) {
+    // existingItem.quantity++;
     Swal.fire({
-      title: 'Item Already in Cart',
-      text: 'This item is already in your cart.',
-      icon: 'info'
-    });
-    return;
-  }
-  // local storage ma data set garna ko lagi
-  const apicart = JSON.parse(localStorage.getItem('apicart')) || [];
-  const existingProduct = apicart.find(item => item.productId === productId);
-
-  if (existingProduct) {
-    existingProduct.quantity++;
+      position: 'top-end',
+      icon: 'success',
+      title: 'Items is already in the cart',
+      showConfirmButton: false,
+      timer: 1000
+    })
   } else {
-    apicart.push({ productId, quantity: 1 });
+    const newItem = {
+      productId: productId,
+      quantity: 1,
+    };
+    cartData.push(newItem);
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Items is added to cart',
+      showConfirmButton: false,
+      timer: 1000
+    })
   }
 
-  localStorage.setItem('apicart', JSON.stringify(apicart));
-  // Add the item to the list of added items
-  addedItems.push(productId);
-  Swal.fire({
-    title: 'Item Added to Cart',
-    text: 'The item has been added to your cart.',
-    icon: 'success'
-  });
-  displayCart();
+  localStorage.setItem('cart', JSON.stringify(cartData));
 }
-
-
-// Function to display cart contents in another HTML file
-function displayCart() {
-  const apicart = JSON.parse(localStorage.getItem('apicart')) || [];
-  const cartDisplay = document.getElementById('cart-display');
-
-  if (cartDisplay) {
-    cartDisplay.innerHTML = '';
-
-    if (apicart.length === 0) {
-      cartDisplay.textContent = 'Your cart is empty.';
-    } else {
-      apicart.forEach(item => {
-        const product = getProductById(item.productId); 
-        // this function is implement to fetch product details by ID
-
-        if (product) {
-          const cartItem = document.createElement('div');
-          cartItem.classList.add('cart-item');
-          cartItem.innerHTML = `
-            <span>${product.title}</span>
-            <span>Quantity: ${item.quantity}</span>
-            <button class="remove-button" data-product-id="${item.productId}">Remove</button>
-          `;
-
-          // Add a click event listener to the remove button
-          const removeButton = cartItem.querySelector('.remove-button');
-          removeButton.addEventListener('click', removeFromCart);
-
-          cartDisplay.appendChild(cartItem);
-        }
-      });
-    }
-  }
-}
-
-// Function to remove an item from the cart
-function removeFromCart(event) {
-  const productId = event.target.getAttribute('data-product-id');
-  const apicart = JSON.parse(localStorage.getItem('apicart')) || [];
-
-  // Find and remove the item from the cart
-  const updatedCart = apicart.filter(item => item.productId !== productId);
-
-  localStorage.setItem('apicart', JSON.stringify(updatedCart));
-  displayCart(); // Update the cart display
-}
-
-
-displayCart();
