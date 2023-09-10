@@ -131,189 +131,105 @@ rel="stylesheet" />
   </div>
   <!-- Container wrapper -->
 </nav>
-<div class="container content-st-center">
-  <h3 class = "text-center">Login Page</h3>
-<!-- Pills navs -->
-<ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
-  <li class="nav-item" role="presentation">
-    <a
-      class="nav-link active"
-      id="tab-login"
-      data-mdb-toggle="pill"
-      href="#pills-login"
-      role="tab"
-      aria-controls="pills-login"
-      aria-selected="true"
-      >Login</a
-    >
-  </li>
-  <li class="nav-item" role="presentation">
-    <a
-      class="nav-link"
-      id="tab-register"
-      data-mdb-toggle="pill"
-      href="#pills-register"
-      role="tab"
-      aria-controls="pills-register"
-      aria-selected="false"
-      >Register</a
-    >
-  </li>
-</ul>
-<!-- Pills navs -->
 
-<!-- Pills content -->
-<div class="tab-content">
-  <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
-    <form id = "loginForm">
-      <div class="text-center mb-3">
-        <p>Sign in with:</p>
-        <button type="button" class="btn btn-secondary btn-floating mx-1">
-          <i class="fab fa-facebook-f"></i>
-        </button>
-
-        <button type="button" class="btn btn-secondary btn-floating mx-1">
-          <i class="fab fa-google"></i>
-        </button>
-
-        <button type="button" class="btn btn-secondary btn-floating mx-1">
-          <i class="fab fa-twitter"></i>
-        </button>
-
-        <button type="button" class="btn btn-secondary btn-floating mx-1">
-          <i class="fab fa-github"></i>
-        </button>
+<section class="vh-100">
+  <div class="container-fluid h-custom">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-md-9 col-lg-6 col-xl-5">
+        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+          class="img-fluid" alt="Sample image">
       </div>
-
-      <p class="text-center">or:</p>
-
-      <!-- Email input -->
-      <div class="form-outline mb-4">
-        <input type="text" id="loginName" class="form-control" required/>
-        <label class="form-label" for="loginName">Email or username</label>
-      </div>
-
-      <!-- Password input -->
-      <div class="form-outline mb-4">
-        <input type="password" id="loginPassword" class="form-control" required/>
-        <label class="form-label" for="loginPassword">Password</label>
-      </div>
-      <input type="checkbox" onclick="myFunction()">Show Password
-
-
-      <!-- 2 column grid layout -->
-      <div class="row mb-4">
-        <div class="col-md-6 d-flex justify-content-center">
-          <!-- Checkbox -->
-          <div class="form-check mb-3 mb-md-0">
-            <input class="form-check-input" type="checkbox" value="" id="loginCheck" checked />
-            <label class="form-check-label" for="loginCheck"> Remember me </label>
-          </div>
-        </div>
-
-        <div class="col-md-6 d-flex justify-content-center">
-          <!-- Simple link -->
-          <a href="forgetpassword.html">Forgot password?</a>
-        </div>
-      </div>
-
-      <!-- Submit button -->
-      <button type="submit" class="btn btn-primary btn-block mb-4" id = "loginButton" onclick = "signin()">Sign in</button>
-
-      <!-- Register buttons -->
-      <div class="text-center">
-        <p>Not a member? <a href="Register.html">Register</a></p>
-      </div>
-    </form>
-  </div>
-  <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
-    <form id = "registerForm" onsubmit="">
-      <div class="text-center mb-3">
-        <p>Sign up with:</p>
-        <button type="button" class="btn btn-secondary btn-floating mx-1">
-          <i class="fab fa-facebook-f"></i>
-        </button>
-
-        <button type="button" class="btn btn-secondary btn-floating mx-1">
-          <i class="fab fa-google"></i>
-        </button>
-
-        <button type="button" class="btn btn-secondary btn-floating mx-1">
-          <i class="fab fa-twitter"></i>
-        </button>
-
-        <button type="button" class="btn btn-secondary btn-floating mx-1">
-          <i class="fab fa-github"></i>
-        </button>
-      </div>
-
-      <p class="text-center">or:</p>
-
-      <!-- Name input -->
-      <div class="form-outline mb-4">
-        <input type="text" id="registerName" class="form-control" required/>
-        <label class="form-label" for="registerName">Name</label>
-      </div>
-
-      <!-- Username input -->
-      <div class="form-outline mb-4">
-        <input type="text" id="registerUsername" class="form-control" required/>
-        <label class="form-label" for="registerUsername">Username</label>
-      </div>
-      <p id="spaceWarning" style="color: red; display: none;">Spaces are not allowed.</p>
-
-
-      <!-- Email input -->
-      <div class="form-outline mb-4">
-        <input type="email" id="registerEmail" class="form-control" required/>
-        <label class="form-label" for="registerEmail">Email</label>
-      </div>
-
-      <div class="form-outline mb-4">
-        <input type="password" id="registerPassword" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required/>
-        <label class="form-label" for="registerPassword">Password</label>
-      </div>
-      <div id="passwordError" style="color: red; display: none;">Password must contain at least one number and one uppercase and lowercase letter, and be at least 8 characters long.</div>
-      <!-- <div id="password-strength"><span class = "simple">A password must contain</span>
-        <span id="letter" class="invalid">A <b>lowercase</b> letter</span>
-        <span id="capital" class="invalid">A <b>capital (uppercase)</b> letter</span>
-        <span id="number" class="invalid">A <b>number</b></span>
-        <span id="length" class="invalid">Minimum <b>8 characters</b></span>
-      </div> -->
-      <input type="checkbox" onclick="myFunction1()">Show Password
-
-     
+      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+          <form id = "loginForm">
+            <div class="text-center mb-3">
+              <p>Sign in with:</p>
+              <button type="button" class="btn btn-secondary btn-floating mx-1">
+                <i class="fab fa-facebook-f"></i>
+              </button>
       
+              <button type="button" class="btn btn-secondary btn-floating mx-1">
+                <i class="fab fa-google"></i>
+              </button>
+      
+              <button type="button" class="btn btn-secondary btn-floating mx-1">
+                <i class="fab fa-twitter"></i>
+              </button>
+      
+              <button type="button" class="btn btn-secondary btn-floating mx-1">
+                <i class="fab fa-github"></i>
+              </button>
+            </div>
+      
+            <p class="text-center">or:</p>
+      
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+              <input type="text" id="loginName" class="form-control" required/>
+              <label class="form-label" for="loginName">Email or username</label>
+            </div>
+      
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+              <input type="password" id="loginPassword" class="form-control" required/>
+              <label class="form-label" for="loginPassword">Password</label>
+            </div>
+            <input type="checkbox" onclick="myFunction()">Show Password
+      
+      
+            <!-- 2 column grid layout -->
+            <div class="row mb-4">
+              <div class="col-md-6 d-flex justify-content-center">
+                <!-- Checkbox -->
+                <div class="form-check mb-3 mb-md-0">
+                  <input class="form-check-input" type="checkbox" value="" id="loginCheck" checked />
+                  <label class="form-check-label" for="loginCheck"> Remember me </label>
+                </div>
+              </div>
+      
+              <div class="col-md-6 d-flex justify-content-center">
+                <!-- Simple link -->
+                <a href="forgetpassword.html">Forgot password?</a>
+              </div>
+            </div>
+      
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary btn-block mb-4" id = "loginButton" onclick = "signin()">Sign in</button>
+      
+            <!-- Register buttons -->
+            <div class="text-center">
+              <p>Not a member? <a href="Register.html">Register</a></p>
+            </div>
+          </form>
 
-      <!-- Repeat Password input -->
-      <div class="form-outline mb-4">
-        <input type="password" id="registerRepeatPassword" class="form-control" required/>
-        <label class="form-label" for="registerRepeatPassword">Repeat password</label>
       </div>
-
-      <!-- Checkbox -->
-      <div class="form-check d-flex justify-content-center mb-4">
-        <input
-          class="form-check-input me-2"
-          type="checkbox"
-          value=""
-          id="registerCheck"
-          checked
-          aria-describedby="registerCheckHelpText"
-        />
-        <label class="form-check-label" for="registerCheck">
-          I have read and agree to the terms
-        </label>
-      </div>
-
-      <!-- Submit button -->
-      <button type = "submit" class="btn btn-primary btn-block mb-3" id = "registerButton" onclick = "CheckForValidation()">Sign in</button>
-    </form>
+    </div>
   </div>
-</div>
-</div>
-<!-- Pills content -->
+  <div
+    class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
+    <!-- Copyright -->
+    <div class="text-white mb-3 mb-md-0">
+      Copyright © 2020. All rights reserved.
+    </div>
+    <!-- Copyright -->
 
+    <!-- Right -->
+    <div>
+      <a href="#!" class="text-white me-4">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="#!" class="text-white me-4">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a href="#!" class="text-white me-4">
+        <i class="fab fa-google"></i>
+      </a>
+      <a href="#!" class="text-white">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </div>
+    <!-- Right -->
+  </div>
+</section>
 
 <script>
   function signin(){

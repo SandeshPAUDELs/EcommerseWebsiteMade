@@ -1,6 +1,4 @@
 
-
-
   const loginForm = document.querySelector('#loginForm');
   const loginUsername = document.querySelector('loginName');
   const registerUsername = document.querySelector('#registerUsername');
@@ -16,6 +14,16 @@
   // function to handle registration
   registerButton.addEventListener('click', (e) => {
     e.preventDefault();
+
+    // this is for password validation
+    const isPasswordValid = validatePassword(registerPasswordInput.value);
+
+    if (!isPasswordValid) {
+      passwordError.style.display = "block";
+      return;
+    } else {
+      passwordError.style.display = "none";
+    }
     // Check if passwords match
     if (registerPasswordInput.value !== registerRepeatPasswordInput.value) {
       // alert('Passwords do not match');
@@ -27,14 +35,7 @@
       return;
     }
 
-    const isPasswordValid = validatePassword(registerPasswordInput.value);
 
-    if (!isPasswordValid) {
-      passwordError.style.display = "block";
-      return;
-    } else {
-      passwordError.style.display = "none";
-    }
 
     const registration = {
       method: 'POST',
@@ -63,6 +64,7 @@
           });
         } else {
           // alert('Registration successful');
+
           Swal.fire({
             position: 'top-end',
             icon: 'success',
@@ -70,6 +72,9 @@
             showConfirmButton: false,
             timer: 1500
           })
+          // if all the condition meets the go to loginRegister.html page
+          window.open('loginRegister.html', '_self');
+
         }
       })
       .catch((err) => {
@@ -98,7 +103,7 @@
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization' : //get token from LS which is stored after login.
+        // 'Authorization' : //get token from LS which is stored after login.
       },
       body: JSON.stringify({
         userName: loginForm.loginName.value,
