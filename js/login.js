@@ -21,7 +21,6 @@
     } else {
       passwordError.style.display = "none";
     }
-    
     // Check if passwords match
     if (registerPasswordInput.value !== registerRepeatPasswordInput.value) {
       // alert('Passwords do not match');

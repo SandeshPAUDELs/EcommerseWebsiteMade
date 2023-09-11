@@ -18,9 +18,7 @@ const PaymentGateway = document.querySelector('input[name="payment Gateway"]:che
 const Data = {Firstname, Lastname, BankName, AccountNumber, PaymentGateway};
 submittedForm.push(Data);
 localStorage.setItem('submittedForm', JSON.stringify(submittedForm));
-// submittedForm is added
 Display();
-// indexx ++;
 });
 
 // This is function to display the Data in main div
@@ -196,6 +194,36 @@ function addToCart(button) {
       timer: 1000
     })
   }
-
   localStorage.setItem('cart', JSON.stringify(cartData));
 }
+
+
+// Function to display products
+function displayProductsFromLocalStorage() {
+  const productDisplayContainer = document.getElementById('product-container');
+  const cartData = JSON.parse(localStorage.getItem('cart')) || [];
+
+  if (Array.isArray(cartData) && cartData.length > 0) {
+    cartData.forEach(item => {
+      const productTitle = item.title; 
+      const productCategory = item.category; 
+      const productPrice = item.price;
+      const productQuantity = item.quantity;
+
+      const productElement = document.createElement('div');
+      productElement.innerHTML = `
+        <div class="product">
+          <h3>${productTitle}</h3>
+          <p>Category: ${productCategory}</p>
+          <p>Price: Rs. ${productPrice.toFixed(2)}</p>
+          <p>Quantity: ${productQuantity}</p>
+        </div>
+      `;
+
+      productDisplayContainer.appendChild(productElement);
+    });
+  } else {
+    productDisplayContainer.innerHTML = '<p>Your cart is empty.</p>';
+  }
+}
+displayProductsFromLocalStorage();

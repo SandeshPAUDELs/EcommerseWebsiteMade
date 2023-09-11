@@ -31,4 +31,16 @@ function myFunction1() {
   });
 
 
+  const InputSpace = document.querySelectorAll('.form-control');
+  const warning = document.querySelectorAll('#spaceWarning2');
+  InputSpace.addEventListener("submit", function(e){
+    if(e.key === ""){
+      e.preventDefault();
+      warning.style.display = "none";
+    }
+    else {
+      warning.style.display = "block";
+    }
+  });
+
 
