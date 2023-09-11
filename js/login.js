@@ -1,4 +1,3 @@
-
   const loginForm = document.querySelector('#loginForm');
   const loginUsername = document.querySelector('loginName');
   const registerUsername = document.querySelector('#registerUsername');
@@ -71,18 +70,30 @@
             showConfirmButton: false,
             timer: 1500
           })
-          // this is to store data in local sotrage 
-          const userData = {
-            userName: registerForm.registerUsername.value,
-            password: registerPasswordInput.value,
-          };
-            let usersData = JSON.parse(localStorage.getItem('usersData')) || [];
-            usersData.push(userData);
-            localStorage.setItem('usersData', JSON.stringify(usersData));
-            
-          // if all the condition meets the go to loginRegister.html page
-          window.open('loginRegister.html', '_self');
+          const registerUsername = registerForm.registerUsername.value;
+          const registerPassword = registerPasswordInput.value;
+          const userEmail = registerEmail.value;
 
+          let usersData = JSON.parse(localStorage.getItem('usersData')) || [];
+          const userExists = usersData.some(user => user.email === userEmail);
+
+          if (userExists) {
+            // alert('email is already taken.');
+            Swal.fire({
+              title: 'Registration Failed',
+              text: 'This registration is failed because email or User name is already taken',
+              icon: 'info'
+            });
+          } else {
+              const userData = {
+              userName: registerUsername,
+              password: registerPassword,
+              email: userEmail,
+              };
+              usersData.push(userData);
+              localStorage.setItem('usersData', JSON.stringify(usersData));
+              window.open('loginRegister.html', '_self');
+            }
         }
       })
       .catch((err) => {
@@ -98,16 +109,18 @@
   // Function to handle login  
   loginButton.addEventListener('click', (e) => {
     e.preventDefault();
-    const userData = JSON.parse(localStorage.getItem(enteredUsername));
+    const loginUsername = document.getElementById('loginName').value;
+  const loginPassword = document.getElementById('loginPassword').value;
 
-    if (loginPasswordInput.value !== registerPasswordInput.value ){
-      Swal.fire({
-        title: 'Your Password or Email Donot match',
-        text: 'This password is incorrect',
-        icon: 'info'
-      });
-      return;
-    }
+  let usersData = JSON.parse(localStorage.getItem('usersData')) || [];
+
+  const user = usersData.find(user => user.userName === loginUsername);
+
+  if (user && user.password === loginPassword) {
+    alert('Login successful!');
+  } else {
+    alert('Login failed. Please check your username and password.');
+  }
   });
   
     const login = {

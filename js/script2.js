@@ -162,7 +162,6 @@ function CheckOutContinue() {
   } else {
     // Add the current set of data to the array
     checkoutData.push(checkoutForm);
-
     // Store the updated array back in local storage
     localStorage.setItem('checkOutData', JSON.stringify(checkoutData));
   }
@@ -173,9 +172,7 @@ function CheckOutContinue() {
 function addToCart(button) {
   const productId = button.getAttribute('data-product-id');
   const cartData = JSON.parse(localStorage.getItem('cart')) || [];
-
   const existingItem = cartData.find(item => item.productId === productId);
-
   if (existingItem) {
     // existingItem.quantity++;
     Swal.fire({
