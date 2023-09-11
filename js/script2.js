@@ -195,6 +195,7 @@ function addToCart(button) {
     })
   }
   localStorage.setItem('cart', JSON.stringify(cartData));
+  displayProductsFromLocalStorage();
 }
 
 
