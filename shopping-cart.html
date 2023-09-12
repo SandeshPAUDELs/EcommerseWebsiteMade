@@ -231,6 +231,38 @@ rel="stylesheet"
   </div>
   <!-- Copyright -->
 </footer>
+<!--
+<script>
+  
+fetch('https://dummyjson.com/products')
+.then(res => res.json())
+.then(data => {
+  const productAllData = document.getElementById('Cart-Items');
+  const products = data.products;
+  if (Array.isArray(products)) {
+    products.forEach(product => {
+      const newData = document.createElement('div');
+      newData.innerHTML = `
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+  <div class="col">
+    <div class="card h-100">
+      <img src="${product.thumbnail}" class="card-img-top" alt="${product.title}">
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class = "card-title">${product.title}</p>
+        <p class="card-text">${product.category}</p>
+        <p>Rs${product.price.toFixed(2)}</p>
+              </div>
+      
+    </div>
+  </div>
+  
+      `;
+      productAllData.appendChild(newData);
+    });
+  }
+})
+</script> -->
     <script src = "js/carts.js"></script>
     <!-- <script src = "js/script2.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
