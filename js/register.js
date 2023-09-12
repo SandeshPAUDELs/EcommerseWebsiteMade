@@ -71,7 +71,7 @@ const registerPasswordInput = document.querySelector('#registerPassword');
 
           let usersData = JSON.parse(localStorage.getItem('usersData')) || [];
           const userExists = usersData.some(user => user.email === userEmail);
-
+          
           if (userExists) {
             // alert('email is already taken.');
             Swal.fire({
