@@ -1,70 +1,220 @@
-/* 
-const userId = 5;
-const apiUrl = `https://dummyjson.com/carts/user/${userId}`;
-
-fetch(apiUrl)
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    return response.json();
-  })
-  .then((data) => {
-    console.log(data);
-    // Now 'data' contains the user's cart information
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
- */
-
-
 document.addEventListener('DOMContentLoaded', () => {
-  fetch('https://dummyjson.com/carts/user/5')
+    const userData = JSON.parse(localStorage.getItem('userloginData'));
+  
+    if (!userData) {
+      console.error('User data not found in local storage.');
+      return;
+    }
+  
+    const userId = userData.id;
+  
+    fetch(`https://dummyjson.com/users/${userId}/carts`)
       .then(res => {
-          if (res.ok) {
-              return res.json();
-          } else {
-              throw new Error('Failed to fetch user details');
-          }
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error('Failed to fetch cart items');
+        }
       })
       .then(cartData => {
-          const CartInfoContainer = document.getElementById('Cart-Items');
-
-          const userDiv = document.createElement('table');
-          userDiv.classList.add('cart-info');
-          const cartItemsContainer = document.createElement('tbody');
-          cartItemsContainer.classList.add('cart-items');
-          cartData.carts[0].products.forEach(product => {
-              const productDiv = document.createElement('tr');
-              productDiv.classList.add('product');
-
-              const productTitle = document.createElement('td');
-              productTitle.textContent = product.title;
-
-              const productPrice = document.createElement('td');
-              productPrice.textContent = `Price: Rs${product.price.toFixed(2)}`;
-
-              const productQuantity = document.createElement('td');
-              productQuantity.textContent = `Quantity: ${product.quantity}`;
-
-              const productTotal = document.createElement('td');
-              productTotal.textContent = `Total: Rs${(product.price * product.quantity).toFixed(2)}`;
-
-              productDiv.appendChild(productTitle);
-              productDiv.appendChild(productPrice);
-              productDiv.appendChild(productQuantity);
-              productDiv.appendChild(productTotal);
-
-              cartItemsContainer.appendChild(productDiv);
-          });
-          userDiv.appendChild(cartItemsContainer);
-
-          CartInfoContainer.appendChild(userDiv);
-
-          console.log(cartData)
+        const CartInfoContainer = document.getElementById('Cart-Items');
+        const mainContainer = document.createElement('div');
+        mainContainer.classList.add('main-container');
+  
+        const userTable = document.createElement('table');
+        userTable.classList.add('cart-info');
+  
+        const tableHeader = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+  
+        const columns = ['Product', 'Price', 'Quantity', 'Total'];
+  
+        columns.forEach(columnName => {
+          const th = document.createElement('th');
+          th.textContent = columnName;
+          headerRow.appendChild(th);
+        });
+  
+        tableHeader.appendChild(headerRow);
+  
+        const cartItemsContainer = document.createElement('tbody');
+        cartItemsContainer.classList.add('cart-items');
+  
+        cartData.carts[0].products.forEach(product => {
+          const productRow = document.createElement('tr');
+          productRow.classList.add('product');
+  
+          const productTitle = document.createElement('td');
+          productTitle.textContent = product.title;
+  
+          const productPrice = document.createElement('td');
+          productPrice.textContent = `Rs ${product.price.toFixed(2)} /-`;
+  
+          const productQuantity = document.createElement('td');
+          productQuantity.textContent = product.quantity;
+  
+          const productTotal = document.createElement('td');
+          const totalPrice = (product.price * product.quantity).toFixed(2);
+          productTotal.textContent = `Rs ${totalPrice} /-`;
+  
+          productRow.appendChild(productTitle);
+          productRow.appendChild(productPrice);
+          productRow.appendChild(productQuantity);
+          productRow.appendChild(productTotal);
+  
+          cartItemsContainer.appendChild(productRow);
+        });
+  
+        userTable.appendChild(tableHeader);
+        userTable.appendChild(cartItemsContainer);
+  
+        const purchasePriceSection = document.createElement('div');
+        purchasePriceSection.classList.add('PurchasePrice');
+  
+        purchasePriceSection.innerHTML = `
+          <div class="card shadow-0 border">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <p class="mb-2">Discount:</p>
+                <p class="mb-2 text-success">Rs ${cartData.carts[0].total}</p>
+              </div>
+              <div class="d-flex justify-content-between">
+                <p class="mb-2">TAX:</p>
+                <p class="mb-2">Rs 000</p>
+              </div>
+              <div class="d-flex justify-content-between">
+                <p class="mb-2">Total price:</p>
+                <p class="mb-2" id="totalPrice">Rs ${cartData.carts[0].discountedTotal}</p>
+              </div>
+              <div class="mt-3">
+                <a href="payment.html" class="btn btn-success w-100 shadow-0 mb-2"> Make Purchase </a>
+                <a href="checkout.html" class="btn btn-light w-100 border mt-2">Check Out</a>
+              </div>
+            </div>
+          </div>
+        `;
+  
+        mainContainer.appendChild(userTable);
+        mainContainer.appendChild(purchasePriceSection);
+  
+        CartInfoContainer.appendChild(mainContainer);
+  
+        console.log(cartData);
       })
       .catch(error => {
-          console.error(error);
+        console.error(error);
       });
-});
+  });
+  
+
+
+
+
+
+
+
+
+// document.addEventListener('DOMContentLoaded', () => {
+// //   fetch('https://dummyjson.com/carts/user/15')
+// fetch('https://dummyjson.com/users/15/carts')
+
+//       .then(res => {
+//           if (res.ok) {
+//               return res.json();
+//           } else {
+//               throw new Error('Failed to fetch cart items');
+//           }
+//       })
+//       .then(cartData => {
+//           const CartInfoContainer = document.getElementById('Cart-Items');
+//           const mainContainer = document.createElement('div');
+//           mainContainer.classList.add('main-container');
+
+          
+//           const userTable = document.createElement('table');
+//           userTable.classList.add('cart-info');
+
+//           const tableHeader = document.createElement('thead');
+//           const headerRow = document.createElement('tr');
+
+//           const columns = ['Product', 'Price', 'Quantity', 'Total'];
+
+//           columns.forEach(columnName => {
+//               const th = document.createElement('th');
+//               th.textContent = columnName;
+//               headerRow.appendChild(th);
+//           });
+
+//           tableHeader.appendChild(headerRow);
+
+//           const cartItemsContainer = document.createElement('tbody');
+//           cartItemsContainer.classList.add('cart-items');
+
+//           cartData.carts[0].products.forEach(product => {
+//               const productRow = document.createElement('tr');
+//               productRow.classList.add('product');
+
+//               const productTitle = document.createElement('td');
+//               productTitle.textContent = product.title;
+
+//               const productPrice = document.createElement('td');
+//               productPrice.textContent = `Rs ${product.price.toFixed(2)} /-`;
+
+//               const productQuantity = document.createElement('td');
+//               productQuantity.textContent = product.quantity;
+
+//               const productTotal = document.createElement('td');
+//               const totalPrice = (product.price * product.quantity).toFixed(2);
+//               productTotal.textContent = `Rs ${totalPrice} /-`;
+//               // need to calculate total price of all items in cart
+
+//               productRow.appendChild(productTitle);
+//               productRow.appendChild(productPrice);
+//               productRow.appendChild(productQuantity);
+//               productRow.appendChild(productTotal);
+
+//               cartItemsContainer.appendChild(productRow);
+//           });
+
+//           userTable.appendChild(tableHeader);
+//           userTable.appendChild(cartItemsContainer);
+
+
+//           const purchasePriceSection = document.createElement('div');
+//           purchasePriceSection.classList.add('PurchasePrice');
+
+//           purchasePriceSection.innerHTML = `
+//                 <div class="card shadow-0 border">
+//                   <div class="card-body">
+//                       <div class="d-flex justify-content-between">
+//                           <p class="mb-2">Discount:</p>
+//                           <p class="mb-2 text-success">Rs ${cartData.carts[0].total}</p>
+//                       </div>
+//                       <div class="d-flex justify-content-between">
+//                           <p class="mb-2">TAX:</p>
+//                           <p class="mb-2">Rs 000</p>
+//                       </div>
+//                       <div class="d-flex justify-content-between">
+//                           <p class="mb-2">Total price:</p>
+//                           <p class="mb-2" id="totalPrice">Rs ${cartData.carts[0].discountedTotal}</p>
+//                       </div>
+//                       <div class="mt-3">
+//                           <a href="payment.html" class="btn btn-success w-100 shadow-0 mb-2"> Make Purchase </a>
+//                           <a href="checkout.html" class="btn btn-light w-100 border mt-2">Check Out</a>
+//                       </div>
+//                   </div>
+//               </div>
+          
+//           `;
+
+//           mainContainer.appendChild(userTable);
+//           mainContainer.appendChild(purchasePriceSection);
+
+//           CartInfoContainer.appendChild(mainContainer);
+
+//           console.log(cartData);
+//       })
+//       .catch(error => {
+//           console.error(error);
+//       });
+// });

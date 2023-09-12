@@ -100,27 +100,18 @@ table tbody tr td span{
     flex-wrap: wrap;
 }
  
-  /* Add a green text color and a checkmark when the requirements are right */
-  .valid {
-    color: green;
-  }
-  
-  .valid:before {
-    position: relative;
-    content: "✔";
-  }
-  
-  /* Add a red text color and an "x" when the requirements are wrong */
-  .invalid, .simple{
-    color: red;
-    /* font-size: 8px; */
-  }
-  
-  
-  .invalid:before {
-    position: relative;
-    content: "✖";
-  }
-  #password-strength{
-    margin-top: -7px;
-  }
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
