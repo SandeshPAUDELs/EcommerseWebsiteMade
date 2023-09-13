@@ -88,12 +88,10 @@ $(document).ready(function (){
 })
 
 
-// // Add an event listener for the "Details" buttons
 const detailsButtons = document.querySelectorAll('.details-button');
 detailsButtons.forEach(button => {
   button.addEventListener('click', () => {
     const productId = button.getAttribute('data-product-id');
-    // Redirect to the product details page with the product ID as a parameter
     window.location.href = `productDetails.html?id=${productId}`;
   });
 });
