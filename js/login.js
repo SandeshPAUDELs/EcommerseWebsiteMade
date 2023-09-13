@@ -19,10 +19,10 @@
     .then(res => {
       if (res.ok) {
         return res.json();
+      
+      } else {
+        throw new Error('Invalid username or password');
       }
-      // } else {
-      //   throw new Error('Invalid username or password');
-      // }
     })
     .then(data => {
       console.log(data);
@@ -32,7 +32,13 @@
     })
     .catch(error => {
       console.error(error);
-      alert('Username or password is not correct');
+      // alert("Error");
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Invalid username or password!',
+        footer: '<a href="">Remember your username and password</a>'
+      })
     });
 });
 
