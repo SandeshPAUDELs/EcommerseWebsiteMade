@@ -1,8 +1,39 @@
+const userDataJSON = localStorage.getItem('userloginData');
+const userData = JSON.parse(userDataJSON);
+const token = userData.token;
+
+if (token) {
+  console.log('Token:', token);
+} else {
+  console.log('Token not found in local storage data.');
+}
 
 
+// The above code is only to check if the token is present in the local storage or not. If it is present, then it will be displayed in the console. If not, then it will display the message "Token not found in local storage data." in the console.
+// the actual code starts from here.
 function fetchAndDisplayUserDetails(userId) {
-  fetch(`https://dummyjson.com/auth/users/${userId}`)
-      .then(res => res.json())
+   
+  fetch(`https://dummyjson.com/auth/users/${userId}`,{
+    method: 'GET', 
+              headers: {
+                  'Authorization': `Bearer ${token}`, 
+                  'Content-Type': 'application/json'
+              },
+  })
+    
+      .then(res => {
+            if (res.ok) {
+                return res.json();
+            } else {
+
+                
+                if (res.status === 401) {
+                    console.log('Unauthorized access. Please log in.');
+                 } else {
+                throw new Error('Failed to fetch user details');
+            }
+        }
+        })
       .then(userDetails => {
         console.log(userDetails)
           const userDetailsHTML = `
@@ -20,16 +51,16 @@ function fetchAndDisplayUserDetails(userId) {
       });
 }
 
-
 function openUserDetailsModal(userId) {
   fetchAndDisplayUserDetails(userId);
   $('#userDetailsModal').modal('show');
 }
+
 function fetchDataAndInitializeDataTable() {
       fetch('https://dummyjson.com/auth/users', {
               method: 'GET', 
               headers: {
-                  'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsInVzZXJuYW1lIjoia21pbmNoZWxsZSIsImVtYWlsIjoia21pbmNoZWxsZUBxcS5jb20iLCJmaXJzdE5hbWUiOiJKZWFubmUiLCJsYXN0TmFtZSI6IkhhbHZvcnNvbiIsImdlbmRlciI6ImZlbWFsZSIsImltYWdlIjoiaHR0cHM6Ly9yb2JvaGFzaC5vcmcvYXV0cXVpYXV0LnBuZyIsImlhdCI6MTY5NDY2OTYyOCwiZXhwIjoxNjk0NjczMjI4fQ.mMsS_YEB2MjZ4DKwqIwM3JvddjkwGPoziSjeRzZ17Jw', 
+                  'Authorization': `Bearer ${token}`, 
                   'Content-Type': 'application/json'
               },
               })
