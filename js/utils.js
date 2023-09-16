@@ -10,3 +10,5 @@ export function getUrlParameter(name) {
         .catch(error => console.error('Error fetching data:', error));
   }
   
+
+  

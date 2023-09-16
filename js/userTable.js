@@ -90,3 +90,9 @@ function fetchDataAndInitializeDataTable() {
 $(document).ready(function () {
       fetchDataAndInitializeDataTable();
   });
+
+  document.querySelector(".logoutButton").addEventListener("click", function(event) {
+    event.preventDefault();
+    localStorage.clear();
+    // alert("Local storage has been cleared.");
+  });

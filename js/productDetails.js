@@ -75,3 +75,10 @@ function displayProductDetails(productDetails){
 }
 
 fetchDataAndDisplay(`https://dummyjson.com/products/${productId}`, displayProductDetails)
+
+
+document.querySelector(".logoutButton").addEventListener("click", function(event) {
+  event.preventDefault();
+  localStorage.clear();
+  // alert("Local storage has been cleared.");
+});

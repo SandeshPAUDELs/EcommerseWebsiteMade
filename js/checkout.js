@@ -16,7 +16,9 @@ function CheckOutContinue() {
   
     // Check if there is already data in local storage
     let checkoutData = JSON.parse(localStorage.getItem('checkOutData')) || [];
-      const isDataSame = checkoutData.some((data) => {
+  
+    // Check if the new data is the same as any existing data
+    const isDataSame = checkoutData.some((data) => {
       return (
         data.FirstName2 === FirstName2 &&
         data.LastName2 === LastName2 &&
@@ -30,8 +32,72 @@ function CheckOutContinue() {
      
     } else {
       checkoutData.push(checkoutForm);
-      // Store the updated data in local storage
+      // Store the updated array back in local storage
       localStorage.setItem('checkOutData', JSON.stringify(checkoutData));
     }
   }
-  
+
+
+
+  const storedCheckoutData = JSON.parse(localStorage.getItem('checkOutData'));
+
+if (storedCheckoutData) {
+  let tableHtml = `
+    <table>
+      <tr>
+        <th>FirstName</th>
+        <th>lastName</th>
+        <th>PhoneNo.</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Delivery Status</th>
+      </tr>
+  `;
+
+  // Loop through the stored data and add rows to the table
+  for (const data of storedCheckoutData) {
+    tableHtml += `
+      <tr>
+        <td>${data.FirstName2}</td>
+        <td>${data.LastName2}</td>
+        <td>${data.PhoneNO}</td>
+        <td>${data.userEmail}</td>
+        <td>${data.userAddress}</td>
+  <td>
+    <select name="Status" id="yourSelectElement">
+      <option style="color: red;" value="1">Pending</option>
+      <option value="2">Awating payment</option>
+      <option value="3">Awating Shipping</option>
+      <option value="4">Awating Fulfilment</option>
+      <option value="5">Cancelled</option>
+      <option value="6">Declined</option>
+      <option value="7" disabled>Refunded</option>
+      <option value="8">Manual Verification Required</option>
+      <option value="9">Partially Refunded</option>
+    </select>
+  </td>
+      </tr>
+    `;
+ 
+  }
+
+  document.getElementById('displayCheckout').innerHTML = tableHtml;
+  tableHtml += `</table>`;
+
+} 
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  const selectElement = document.getElementById('yourSelectElement');
+
+  if (selectElement) {
+    selectElement.addEventListener('change', function () {
+      const selectedOption = selectElement.options[selectElement.selectedIndex];
+      const selectedOptionText = selectedOption.text;
+      console.log(selectedOptionText)
+
+      localStorage.setItem('selectedOptionText', selectedOptionText);
+    });
+  }
+});
